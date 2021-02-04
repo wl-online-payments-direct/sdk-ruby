@@ -1,0 +1,13 @@
+--- # YAML settings used in testing the SDK
+  direct.api.endpoint.host: payment.preprod.direct.ingenico.com
+  direct.api.authorizationType: v1HMAC
+  direct.api.connectTimeout: -1
+  direct.api.socketTimeout: -1
+  direct.api.maxConnections: 10
+  direct.api.integrator: Ingenico
+  # change uri to preferred proxy
+  direct.api.proxy.uri: http://localhost:9999
+  # change username and password to authentication credentials for the proxy, omit the entries if no authentication is required
+  # authentication is done using basic proxy authentication. Therefore, to avoid leaking credentials you should direct to the proxy using SSL
+  direct.api.proxy.username: nil
+  direct.api.proxy.password: nil
