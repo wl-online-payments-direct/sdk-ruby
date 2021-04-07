@@ -4,6 +4,7 @@
 #
 require 'ingenico/direct/sdk/data_object'
 require 'ingenico/direct/sdk/domain/card_recurrence_details'
+require 'ingenico/direct/sdk/domain/payment_product130_specific_input'
 require 'ingenico/direct/sdk/domain/payment_product5100_specific_input'
 require 'ingenico/direct/sdk/domain/three_d_secure_base'
 
@@ -12,6 +13,7 @@ module Ingenico::Direct::SDK
 
     # @attr [String] authorization_mode
     # @attr [String] initial_scheme_transaction_id
+    # @attr [Ingenico::Direct::SDK::Domain::PaymentProduct130SpecificInput] payment_product130_specific_input
     # @attr [Ingenico::Direct::SDK::Domain::PaymentProduct5100SpecificInput] payment_product5100_specific_input
     # @attr [Integer] payment_product_id
     # @attr [Ingenico::Direct::SDK::Domain::CardRecurrenceDetails] recurring
@@ -24,6 +26,7 @@ module Ingenico::Direct::SDK
     class CardPaymentMethodSpecificInputBase < Ingenico::Direct::SDK::DataObject
       attr_accessor :authorization_mode
       attr_accessor :initial_scheme_transaction_id
+      attr_accessor :payment_product130_specific_input
       attr_accessor :payment_product5100_specific_input
       attr_accessor :payment_product_id
       attr_accessor :recurring
@@ -39,6 +42,7 @@ module Ingenico::Direct::SDK
         hash = super
         hash['authorizationMode'] = @authorization_mode unless @authorization_mode.nil?
         hash['initialSchemeTransactionId'] = @initial_scheme_transaction_id unless @initial_scheme_transaction_id.nil?
+        hash['paymentProduct130SpecificInput'] = @payment_product130_specific_input.to_h if @payment_product130_specific_input
         hash['paymentProduct5100SpecificInput'] = @payment_product5100_specific_input.to_h if @payment_product5100_specific_input
         hash['paymentProductId'] = @payment_product_id unless @payment_product_id.nil?
         hash['recurring'] = @recurring.to_h if @recurring
@@ -55,6 +59,10 @@ module Ingenico::Direct::SDK
         super
         @authorization_mode = hash['authorizationMode'] if hash.key? 'authorizationMode'
         @initial_scheme_transaction_id = hash['initialSchemeTransactionId'] if hash.key? 'initialSchemeTransactionId'
+        if hash.key? 'paymentProduct130SpecificInput'
+          raise TypeError, "value '%s' is not a Hash" % [hash['paymentProduct130SpecificInput']] unless hash['paymentProduct130SpecificInput'].is_a? Hash
+          @payment_product130_specific_input = Ingenico::Direct::SDK::Domain::PaymentProduct130SpecificInput.new_from_hash(hash['paymentProduct130SpecificInput'])
+        end
         if hash.key? 'paymentProduct5100SpecificInput'
           raise TypeError, "value '%s' is not a Hash" % [hash['paymentProduct5100SpecificInput']] unless hash['paymentProduct5100SpecificInput'].is_a? Hash
           @payment_product5100_specific_input = Ingenico::Direct::SDK::Domain::PaymentProduct5100SpecificInput.new_from_hash(hash['paymentProduct5100SpecificInput'])

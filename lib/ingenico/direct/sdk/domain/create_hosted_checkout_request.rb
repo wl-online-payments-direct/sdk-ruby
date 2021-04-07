@@ -6,6 +6,7 @@ require 'ingenico/direct/sdk/data_object'
 require 'ingenico/direct/sdk/domain/card_payment_method_specific_input_base'
 require 'ingenico/direct/sdk/domain/fraud_fields'
 require 'ingenico/direct/sdk/domain/hosted_checkout_specific_input'
+require 'ingenico/direct/sdk/domain/mobile_payment_method_hosted_checkout_specific_input'
 require 'ingenico/direct/sdk/domain/order'
 require 'ingenico/direct/sdk/domain/redirect_payment_method_specific_input'
 
@@ -15,12 +16,14 @@ module Ingenico::Direct::SDK
     # @attr [Ingenico::Direct::SDK::Domain::CardPaymentMethodSpecificInputBase] card_payment_method_specific_input
     # @attr [Ingenico::Direct::SDK::Domain::FraudFields] fraud_fields
     # @attr [Ingenico::Direct::SDK::Domain::HostedCheckoutSpecificInput] hosted_checkout_specific_input
+    # @attr [Ingenico::Direct::SDK::Domain::MobilePaymentMethodHostedCheckoutSpecificInput] mobile_payment_method_specific_input
     # @attr [Ingenico::Direct::SDK::Domain::Order] order
     # @attr [Ingenico::Direct::SDK::Domain::RedirectPaymentMethodSpecificInput] redirect_payment_method_specific_input
     class CreateHostedCheckoutRequest < Ingenico::Direct::SDK::DataObject
       attr_accessor :card_payment_method_specific_input
       attr_accessor :fraud_fields
       attr_accessor :hosted_checkout_specific_input
+      attr_accessor :mobile_payment_method_specific_input
       attr_accessor :order
       attr_accessor :redirect_payment_method_specific_input
 
@@ -30,6 +33,7 @@ module Ingenico::Direct::SDK
         hash['cardPaymentMethodSpecificInput'] = @card_payment_method_specific_input.to_h if @card_payment_method_specific_input
         hash['fraudFields'] = @fraud_fields.to_h if @fraud_fields
         hash['hostedCheckoutSpecificInput'] = @hosted_checkout_specific_input.to_h if @hosted_checkout_specific_input
+        hash['mobilePaymentMethodSpecificInput'] = @mobile_payment_method_specific_input.to_h if @mobile_payment_method_specific_input
         hash['order'] = @order.to_h if @order
         hash['redirectPaymentMethodSpecificInput'] = @redirect_payment_method_specific_input.to_h if @redirect_payment_method_specific_input
         hash
@@ -48,6 +52,10 @@ module Ingenico::Direct::SDK
         if hash.key? 'hostedCheckoutSpecificInput'
           raise TypeError, "value '%s' is not a Hash" % [hash['hostedCheckoutSpecificInput']] unless hash['hostedCheckoutSpecificInput'].is_a? Hash
           @hosted_checkout_specific_input = Ingenico::Direct::SDK::Domain::HostedCheckoutSpecificInput.new_from_hash(hash['hostedCheckoutSpecificInput'])
+        end
+        if hash.key? 'mobilePaymentMethodSpecificInput'
+          raise TypeError, "value '%s' is not a Hash" % [hash['mobilePaymentMethodSpecificInput']] unless hash['mobilePaymentMethodSpecificInput'].is_a? Hash
+          @mobile_payment_method_specific_input = Ingenico::Direct::SDK::Domain::MobilePaymentMethodHostedCheckoutSpecificInput.new_from_hash(hash['mobilePaymentMethodSpecificInput'])
         end
         if hash.key? 'order'
           raise TypeError, "value '%s' is not a Hash" % [hash['order']] unless hash['order'].is_a? Hash

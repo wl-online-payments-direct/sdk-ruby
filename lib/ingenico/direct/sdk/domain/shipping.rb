@@ -13,6 +13,8 @@ module Ingenico::Direct::SDK
     # @attr [String] email_address
     # @attr [String] first_usage_date
     # @attr [true/false] is_first_usage
+    # @attr [Long] shipping_cost
+    # @attr [Long] shipping_cost_tax
     # @attr [String] type
     class Shipping < Ingenico::Direct::SDK::DataObject
       attr_accessor :address
@@ -20,6 +22,8 @@ module Ingenico::Direct::SDK
       attr_accessor :email_address
       attr_accessor :first_usage_date
       attr_accessor :is_first_usage
+      attr_accessor :shipping_cost
+      attr_accessor :shipping_cost_tax
       attr_accessor :type
 
       # @return (Hash)
@@ -30,6 +34,8 @@ module Ingenico::Direct::SDK
         hash['emailAddress'] = @email_address unless @email_address.nil?
         hash['firstUsageDate'] = @first_usage_date unless @first_usage_date.nil?
         hash['isFirstUsage'] = @is_first_usage unless @is_first_usage.nil?
+        hash['shippingCost'] = @shipping_cost unless @shipping_cost.nil?
+        hash['shippingCostTax'] = @shipping_cost_tax unless @shipping_cost_tax.nil?
         hash['type'] = @type unless @type.nil?
         hash
       end
@@ -44,6 +50,8 @@ module Ingenico::Direct::SDK
         @email_address = hash['emailAddress'] if hash.key? 'emailAddress'
         @first_usage_date = hash['firstUsageDate'] if hash.key? 'firstUsageDate'
         @is_first_usage = hash['isFirstUsage'] if hash.key? 'isFirstUsage'
+        @shipping_cost = hash['shippingCost'] if hash.key? 'shippingCost'
+        @shipping_cost_tax = hash['shippingCostTax'] if hash.key? 'shippingCostTax'
         @type = hash['type'] if hash.key? 'type'
       end
     end

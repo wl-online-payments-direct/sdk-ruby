@@ -4,6 +4,8 @@
 #
 require 'ingenico/direct/sdk/data_object'
 require 'ingenico/direct/sdk/domain/account_on_file'
+require 'ingenico/direct/sdk/domain/payment_product302_specific_data'
+require 'ingenico/direct/sdk/domain/payment_product320_specific_data'
 require 'ingenico/direct/sdk/domain/payment_product_display_hints'
 require 'ingenico/direct/sdk/domain/payment_product_field'
 
@@ -17,6 +19,8 @@ module Ingenico::Direct::SDK
     # @attr [Array<Ingenico::Direct::SDK::Domain::PaymentProductField>] fields
     # @attr [Integer] id
     # @attr [String] payment_method
+    # @attr [Ingenico::Direct::SDK::Domain::PaymentProduct302SpecificData] payment_product302_specific_data
+    # @attr [Ingenico::Direct::SDK::Domain::PaymentProduct320SpecificData] payment_product320_specific_data
     # @attr [String] payment_product_group
     # @attr [true/false] uses_redirection_to3rd_party
     class PaymentProduct < Ingenico::Direct::SDK::DataObject
@@ -27,6 +31,8 @@ module Ingenico::Direct::SDK
       attr_accessor :fields
       attr_accessor :id
       attr_accessor :payment_method
+      attr_accessor :payment_product302_specific_data
+      attr_accessor :payment_product320_specific_data
       attr_accessor :payment_product_group
       attr_accessor :uses_redirection_to3rd_party
 
@@ -40,6 +46,8 @@ module Ingenico::Direct::SDK
         hash['fields'] = @fields.collect(&:to_h) if @fields
         hash['id'] = @id unless @id.nil?
         hash['paymentMethod'] = @payment_method unless @payment_method.nil?
+        hash['paymentProduct302SpecificData'] = @payment_product302_specific_data.to_h if @payment_product302_specific_data
+        hash['paymentProduct320SpecificData'] = @payment_product320_specific_data.to_h if @payment_product320_specific_data
         hash['paymentProductGroup'] = @payment_product_group unless @payment_product_group.nil?
         hash['usesRedirectionTo3rdParty'] = @uses_redirection_to3rd_party unless @uses_redirection_to3rd_party.nil?
         hash
@@ -69,6 +77,14 @@ module Ingenico::Direct::SDK
         end
         @id = hash['id'] if hash.key? 'id'
         @payment_method = hash['paymentMethod'] if hash.key? 'paymentMethod'
+        if hash.key? 'paymentProduct302SpecificData'
+          raise TypeError, "value '%s' is not a Hash" % [hash['paymentProduct302SpecificData']] unless hash['paymentProduct302SpecificData'].is_a? Hash
+          @payment_product302_specific_data = Ingenico::Direct::SDK::Domain::PaymentProduct302SpecificData.new_from_hash(hash['paymentProduct302SpecificData'])
+        end
+        if hash.key? 'paymentProduct320SpecificData'
+          raise TypeError, "value '%s' is not a Hash" % [hash['paymentProduct320SpecificData']] unless hash['paymentProduct320SpecificData'].is_a? Hash
+          @payment_product320_specific_data = Ingenico::Direct::SDK::Domain::PaymentProduct320SpecificData.new_from_hash(hash['paymentProduct320SpecificData'])
+        end
         @payment_product_group = hash['paymentProductGroup'] if hash.key? 'paymentProductGroup'
         @uses_redirection_to3rd_party = hash['usesRedirectionTo3rdParty'] if hash.key? 'usesRedirectionTo3rdParty'
       end

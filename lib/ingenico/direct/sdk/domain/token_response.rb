@@ -14,12 +14,14 @@ module Ingenico::Direct::SDK
     # @attr [Ingenico::Direct::SDK::Domain::TokenEWallet] e_wallet
     # @attr [Ingenico::Direct::SDK::Domain::ExternalTokenLinked] external_token_linked
     # @attr [String] id
+    # @attr [true/false] is_temporary
     # @attr [Integer] payment_product_id
     class TokenResponse < Ingenico::Direct::SDK::DataObject
       attr_accessor :card
       attr_accessor :e_wallet
       attr_accessor :external_token_linked
       attr_accessor :id
+      attr_accessor :is_temporary
       attr_accessor :payment_product_id
 
       # @return (Hash)
@@ -29,6 +31,7 @@ module Ingenico::Direct::SDK
         hash['eWallet'] = @e_wallet.to_h if @e_wallet
         hash['externalTokenLinked'] = @external_token_linked.to_h if @external_token_linked
         hash['id'] = @id unless @id.nil?
+        hash['isTemporary'] = @is_temporary unless @is_temporary.nil?
         hash['paymentProductId'] = @payment_product_id unless @payment_product_id.nil?
         hash
       end
@@ -48,6 +51,7 @@ module Ingenico::Direct::SDK
           @external_token_linked = Ingenico::Direct::SDK::Domain::ExternalTokenLinked.new_from_hash(hash['externalTokenLinked'])
         end
         @id = hash['id'] if hash.key? 'id'
+        @is_temporary = hash['isTemporary'] if hash.key? 'isTemporary'
         @payment_product_id = hash['paymentProductId'] if hash.key? 'paymentProductId'
       end
     end

@@ -21,6 +21,7 @@ module Ingenico::Direct::SDK
     # @attr [String] fare_basis
     # @attr [Integer] fee
     # @attr [String] flight_number
+    # @attr [Integer] leg_fare
     # @attr [Integer] number
     # @attr [String] origin_airport
     # @attr [String] passenger_class
@@ -41,6 +42,7 @@ module Ingenico::Direct::SDK
       attr_accessor :fare_basis
       attr_accessor :fee
       attr_accessor :flight_number
+      attr_accessor :leg_fare
       attr_accessor :number
       attr_accessor :origin_airport
       attr_accessor :passenger_class
@@ -64,6 +66,7 @@ module Ingenico::Direct::SDK
         hash['fareBasis'] = @fare_basis unless @fare_basis.nil?
         hash['fee'] = @fee unless @fee.nil?
         hash['flightNumber'] = @flight_number unless @flight_number.nil?
+        hash['legFare'] = @leg_fare unless @leg_fare.nil?
         hash['number'] = @number unless @number.nil?
         hash['originAirport'] = @origin_airport unless @origin_airport.nil?
         hash['passengerClass'] = @passenger_class unless @passenger_class.nil?
@@ -88,6 +91,7 @@ module Ingenico::Direct::SDK
         @fare_basis = hash['fareBasis'] if hash.key? 'fareBasis'
         @fee = hash['fee'] if hash.key? 'fee'
         @flight_number = hash['flightNumber'] if hash.key? 'flightNumber'
+        @leg_fare = hash['legFare'] if hash.key? 'legFare'
         @number = hash['number'] if hash.key? 'number'
         @origin_airport = hash['originAirport'] if hash.key? 'originAirport'
         @passenger_class = hash['passengerClass'] if hash.key? 'passengerClass'

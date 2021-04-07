@@ -5,6 +5,7 @@
 require 'ingenico/direct/sdk/data_object'
 require 'ingenico/direct/sdk/domain/card'
 require 'ingenico/direct/sdk/domain/card_recurrence_details'
+require 'ingenico/direct/sdk/domain/payment_product130_specific_input'
 require 'ingenico/direct/sdk/domain/three_d_secure'
 
 module Ingenico::Direct::SDK
@@ -14,11 +15,11 @@ module Ingenico::Direct::SDK
     # @attr [Ingenico::Direct::SDK::Domain::Card] card
     # @attr [String] initial_scheme_transaction_id
     # @attr [true/false] is_recurring
+    # @attr [Ingenico::Direct::SDK::Domain::PaymentProduct130SpecificInput] payment_product130_specific_input
     # @attr [Integer] payment_product_id
     # @attr [Ingenico::Direct::SDK::Domain::CardRecurrenceDetails] recurring
     # @attr [String] return_url
     # @attr [true/false] skip_authentication
-    # @attr [true/false] skip_soft_decline
     # @attr [Ingenico::Direct::SDK::Domain::ThreeDSecure] three_d_secure
     # @attr [String] token
     # @attr [true/false] tokenize
@@ -30,11 +31,11 @@ module Ingenico::Direct::SDK
       attr_accessor :card
       attr_accessor :initial_scheme_transaction_id
       attr_accessor :is_recurring
+      attr_accessor :payment_product130_specific_input
       attr_accessor :payment_product_id
       attr_accessor :recurring
       attr_accessor :return_url
       attr_accessor :skip_authentication
-      attr_accessor :skip_soft_decline
       attr_accessor :three_d_secure
       attr_accessor :token
       attr_accessor :tokenize
@@ -49,11 +50,11 @@ module Ingenico::Direct::SDK
         hash['card'] = @card.to_h if @card
         hash['initialSchemeTransactionId'] = @initial_scheme_transaction_id unless @initial_scheme_transaction_id.nil?
         hash['isRecurring'] = @is_recurring unless @is_recurring.nil?
+        hash['paymentProduct130SpecificInput'] = @payment_product130_specific_input.to_h if @payment_product130_specific_input
         hash['paymentProductId'] = @payment_product_id unless @payment_product_id.nil?
         hash['recurring'] = @recurring.to_h if @recurring
         hash['returnUrl'] = @return_url unless @return_url.nil?
         hash['skipAuthentication'] = @skip_authentication unless @skip_authentication.nil?
-        hash['skipSoftDecline'] = @skip_soft_decline unless @skip_soft_decline.nil?
         hash['threeDSecure'] = @three_d_secure.to_h if @three_d_secure
         hash['token'] = @token unless @token.nil?
         hash['tokenize'] = @tokenize unless @tokenize.nil?
@@ -72,6 +73,10 @@ module Ingenico::Direct::SDK
         end
         @initial_scheme_transaction_id = hash['initialSchemeTransactionId'] if hash.key? 'initialSchemeTransactionId'
         @is_recurring = hash['isRecurring'] if hash.key? 'isRecurring'
+        if hash.key? 'paymentProduct130SpecificInput'
+          raise TypeError, "value '%s' is not a Hash" % [hash['paymentProduct130SpecificInput']] unless hash['paymentProduct130SpecificInput'].is_a? Hash
+          @payment_product130_specific_input = Ingenico::Direct::SDK::Domain::PaymentProduct130SpecificInput.new_from_hash(hash['paymentProduct130SpecificInput'])
+        end
         @payment_product_id = hash['paymentProductId'] if hash.key? 'paymentProductId'
         if hash.key? 'recurring'
           raise TypeError, "value '%s' is not a Hash" % [hash['recurring']] unless hash['recurring'].is_a? Hash
@@ -79,7 +84,6 @@ module Ingenico::Direct::SDK
         end
         @return_url = hash['returnUrl'] if hash.key? 'returnUrl'
         @skip_authentication = hash['skipAuthentication'] if hash.key? 'skipAuthentication'
-        @skip_soft_decline = hash['skipSoftDecline'] if hash.key? 'skipSoftDecline'
         if hash.key? 'threeDSecure'
           raise TypeError, "value '%s' is not a Hash" % [hash['threeDSecure']] unless hash['threeDSecure'].is_a? Hash
           @three_d_secure = Ingenico::Direct::SDK::Domain::ThreeDSecure.new_from_hash(hash['threeDSecure'])

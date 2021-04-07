@@ -3,11 +3,13 @@
 # https://support.direct.ingenico.com/documentation/api/reference/
 #
 require 'ingenico/direct/sdk/data_object'
+require 'ingenico/direct/sdk/domain/card_payment_method_specific_input_for_hosted_checkout'
 require 'ingenico/direct/sdk/domain/payment_product_filters_hosted_checkout'
 
 module Ingenico::Direct::SDK
   module Domain
 
+    # @attr [Ingenico::Direct::SDK::Domain::CardPaymentMethodSpecificInputForHostedCheckout] card_payment_method_specific_input
     # @attr [true/false] is_recurring
     # @attr [String] locale
     # @attr [Ingenico::Direct::SDK::Domain::PaymentProductFiltersHostedCheckout] payment_product_filters
@@ -16,6 +18,7 @@ module Ingenico::Direct::SDK
     # @attr [String] tokens
     # @attr [String] variant
     class HostedCheckoutSpecificInput < Ingenico::Direct::SDK::DataObject
+      attr_accessor :card_payment_method_specific_input
       attr_accessor :is_recurring
       attr_accessor :locale
       attr_accessor :payment_product_filters
@@ -27,6 +30,7 @@ module Ingenico::Direct::SDK
       # @return (Hash)
       def to_h
         hash = super
+        hash['cardPaymentMethodSpecificInput'] = @card_payment_method_specific_input.to_h if @card_payment_method_specific_input
         hash['isRecurring'] = @is_recurring unless @is_recurring.nil?
         hash['locale'] = @locale unless @locale.nil?
         hash['paymentProductFilters'] = @payment_product_filters.to_h if @payment_product_filters
@@ -39,6 +43,10 @@ module Ingenico::Direct::SDK
 
       def from_hash(hash)
         super
+        if hash.key? 'cardPaymentMethodSpecificInput'
+          raise TypeError, "value '%s' is not a Hash" % [hash['cardPaymentMethodSpecificInput']] unless hash['cardPaymentMethodSpecificInput'].is_a? Hash
+          @card_payment_method_specific_input = Ingenico::Direct::SDK::Domain::CardPaymentMethodSpecificInputForHostedCheckout.new_from_hash(hash['cardPaymentMethodSpecificInput'])
+        end
         @is_recurring = hash['isRecurring'] if hash.key? 'isRecurring'
         @locale = hash['locale'] if hash.key? 'locale'
         if hash.key? 'paymentProductFilters'
