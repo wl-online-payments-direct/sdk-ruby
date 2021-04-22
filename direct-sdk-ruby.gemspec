@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name           = 'direct-sdk-ruby'
-  spec.version        = '1.1.0'
+  spec.version        = '1.2.0'
   spec.authors        = ['Ingenico ePayments']
   spec.email          = ['60233882+ingenico-dev-team@users.noreply.github.com']
   spec.summary        = %q{SDK to communicate with the Ingenico ePayments platform using the Ingenico Direct Server API}

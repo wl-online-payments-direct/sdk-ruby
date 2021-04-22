@@ -49,7 +49,7 @@ module Ingenico::Direct::SDK
         Ingenico::Direct::SDK::Merchant::Payments::PaymentsClient.new(self, nil)
       end
 
-      # Resource /v2/!{merchantId}/services/testconnection
+      # Resource /v2/!{merchantId}/services
       # @return [Ingenico::Direct::SDK::Merchant::Services::ServicesClient]
       def services
         Ingenico::Direct::SDK::Merchant::Services::ServicesClient.new(self, nil)
