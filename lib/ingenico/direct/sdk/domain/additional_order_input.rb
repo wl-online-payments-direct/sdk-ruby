@@ -5,6 +5,7 @@
 require 'ingenico/direct/sdk/data_object'
 require 'ingenico/direct/sdk/domain/airline_data'
 require 'ingenico/direct/sdk/domain/loan_recipient'
+require 'ingenico/direct/sdk/domain/lodging_data'
 require 'ingenico/direct/sdk/domain/order_type_information'
 
 module Ingenico::Direct::SDK
@@ -12,10 +13,12 @@ module Ingenico::Direct::SDK
 
     # @attr [Ingenico::Direct::SDK::Domain::AirlineData] airline_data
     # @attr [Ingenico::Direct::SDK::Domain::LoanRecipient] loan_recipient
+    # @attr [Ingenico::Direct::SDK::Domain::LodgingData] lodging_data
     # @attr [Ingenico::Direct::SDK::Domain::OrderTypeInformation] type_information
     class AdditionalOrderInput < Ingenico::Direct::SDK::DataObject
       attr_accessor :airline_data
       attr_accessor :loan_recipient
+      attr_accessor :lodging_data
       attr_accessor :type_information
 
       # @return (Hash)
@@ -23,6 +26,7 @@ module Ingenico::Direct::SDK
         hash = super
         hash['airlineData'] = @airline_data.to_h if @airline_data
         hash['loanRecipient'] = @loan_recipient.to_h if @loan_recipient
+        hash['lodgingData'] = @lodging_data.to_h if @lodging_data
         hash['typeInformation'] = @type_information.to_h if @type_information
         hash
       end
@@ -36,6 +40,10 @@ module Ingenico::Direct::SDK
         if hash.key? 'loanRecipient'
           raise TypeError, "value '%s' is not a Hash" % [hash['loanRecipient']] unless hash['loanRecipient'].is_a? Hash
           @loan_recipient = Ingenico::Direct::SDK::Domain::LoanRecipient.new_from_hash(hash['loanRecipient'])
+        end
+        if hash.key? 'lodgingData'
+          raise TypeError, "value '%s' is not a Hash" % [hash['lodgingData']] unless hash['lodgingData'].is_a? Hash
+          @lodging_data = Ingenico::Direct::SDK::Domain::LodgingData.new_from_hash(hash['lodgingData'])
         end
         if hash.key? 'typeInformation'
           raise TypeError, "value '%s' is not a Hash" % [hash['typeInformation']] unless hash['typeInformation'].is_a? Hash

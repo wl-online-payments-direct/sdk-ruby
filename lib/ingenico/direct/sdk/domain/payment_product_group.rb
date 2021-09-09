@@ -11,10 +11,12 @@ module Ingenico::Direct::SDK
 
     # @attr [Ingenico::Direct::SDK::Domain::AccountOnFile] account_on_file
     # @attr [Ingenico::Direct::SDK::Domain::PaymentProductDisplayHints] display_hints
+    # @attr [Array<Ingenico::Direct::SDK::Domain::PaymentProductDisplayHints>] display_hints_list
     # @attr [String] id
     class PaymentProductGroup < Ingenico::Direct::SDK::DataObject
       attr_accessor :account_on_file
       attr_accessor :display_hints
+      attr_accessor :display_hints_list
       attr_accessor :id
 
       # @return (Hash)
@@ -22,6 +24,7 @@ module Ingenico::Direct::SDK
         hash = super
         hash['accountOnFile'] = @account_on_file.to_h if @account_on_file
         hash['displayHints'] = @display_hints.to_h if @display_hints
+        hash['displayHintsList'] = @display_hints_list.collect(&:to_h) if @display_hints_list
         hash['id'] = @id unless @id.nil?
         hash
       end
@@ -35,6 +38,13 @@ module Ingenico::Direct::SDK
         if hash.key? 'displayHints'
           raise TypeError, "value '%s' is not a Hash" % [hash['displayHints']] unless hash['displayHints'].is_a? Hash
           @display_hints = Ingenico::Direct::SDK::Domain::PaymentProductDisplayHints.new_from_hash(hash['displayHints'])
+        end
+        if hash.key? 'displayHintsList'
+          raise TypeError, "value '%s' is not an Array" % [hash['displayHintsList']] unless hash['displayHintsList'].is_a? Array
+          @display_hints_list = []
+          hash['displayHintsList'].each do |e|
+            @display_hints_list << Ingenico::Direct::SDK::Domain::PaymentProductDisplayHints.new_from_hash(e)
+          end
         end
         @id = hash['id'] if hash.key? 'id'
       end

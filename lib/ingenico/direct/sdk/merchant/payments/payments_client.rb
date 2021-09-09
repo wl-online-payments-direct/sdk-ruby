@@ -13,6 +13,7 @@ require 'ingenico/direct/sdk/domain/complete_payment_response'
 require 'ingenico/direct/sdk/domain/create_payment_request'
 require 'ingenico/direct/sdk/domain/create_payment_response'
 require 'ingenico/direct/sdk/domain/error_response'
+require 'ingenico/direct/sdk/domain/payment_details_response'
 require 'ingenico/direct/sdk/domain/payment_error_response'
 require 'ingenico/direct/sdk/domain/payment_response'
 require 'ingenico/direct/sdk/domain/refund_error_response'
@@ -247,6 +248,37 @@ module Ingenico::Direct::SDK
             client_headers,
             nil,
             Ingenico::Direct::SDK::Domain::CapturesResponse,
+            context
+          )
+        rescue ResponseException => e
+          error_type = Ingenico::Direct::SDK::Domain::ErrorResponse
+          error_object = @communicator.marshaller.unmarshal(e.body, error_type)
+          raise create_exception(e.status_code, e.body, error_object, context)
+        end
+
+        # Resource /v2/!{merchantId}/payments/!{paymentId}/details - {https://support.direct.ingenico.com/documentation/api/reference#operation/GetPaymentDetailsApi Get payment details}
+        # @param payment_id [String]
+        # @param context    [Ingenico::Direct::SDK::CallContext]
+        # @return [Ingenico::Direct::SDK::Domain::PaymentDetailsResponse]
+        # @raise [Ingenico::Direct::SDK::ValidationException] if the request was not correct and couldn't be processed (HTTP status code 400)
+        # @raise [Ingenico::Direct::SDK::AuthorizationException] if the request was not allowed (HTTP status code 403)
+        # @raise [Ingenico::Direct::SDK::IdempotenceException] if an idempotent request caused a conflict (HTTP status code 409)
+        # @raise [Ingenico::Direct::SDK::ReferenceException] if an object was attempted to be referenced that doesn't exist or has been removed,
+        #        or there was a conflict (HTTP status code 404, 409 or 410)
+        # @raise [Ingenico::Direct::SDK::GlobalCollectException] if something went wrong at the Ingenico ePayments platform,
+        #        the Ingenico ePayments platform was unable to process a message from a downstream partner/acquirer,
+        #        or the service that you're trying to reach is temporary unavailable (HTTP status code 500, 502 or 503)
+        # @raise [Ingenico::Direct::SDK::ApiException]if the Ingenico ePayments platform returned any other error
+        def get_payment_details(payment_id, context = nil)
+          path_context = {
+            'paymentId'.freeze => payment_id,
+          }
+          uri = instantiate_uri('/v2/{merchantId}/payments/{paymentId}/details', path_context)
+          @communicator.get(
+            uri,
+            client_headers,
+            nil,
+            Ingenico::Direct::SDK::Domain::PaymentDetailsResponse,
             context
           )
         rescue ResponseException => e

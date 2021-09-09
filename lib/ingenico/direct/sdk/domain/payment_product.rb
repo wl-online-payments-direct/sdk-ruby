@@ -16,6 +16,7 @@ module Ingenico::Direct::SDK
     # @attr [true/false] allows_recurring
     # @attr [true/false] allows_tokenization
     # @attr [Ingenico::Direct::SDK::Domain::PaymentProductDisplayHints] display_hints
+    # @attr [Array<Ingenico::Direct::SDK::Domain::PaymentProductDisplayHints>] display_hints_list
     # @attr [Array<Ingenico::Direct::SDK::Domain::PaymentProductField>] fields
     # @attr [Integer] id
     # @attr [String] payment_method
@@ -28,6 +29,7 @@ module Ingenico::Direct::SDK
       attr_accessor :allows_recurring
       attr_accessor :allows_tokenization
       attr_accessor :display_hints
+      attr_accessor :display_hints_list
       attr_accessor :fields
       attr_accessor :id
       attr_accessor :payment_method
@@ -43,6 +45,7 @@ module Ingenico::Direct::SDK
         hash['allowsRecurring'] = @allows_recurring unless @allows_recurring.nil?
         hash['allowsTokenization'] = @allows_tokenization unless @allows_tokenization.nil?
         hash['displayHints'] = @display_hints.to_h if @display_hints
+        hash['displayHintsList'] = @display_hints_list.collect(&:to_h) if @display_hints_list
         hash['fields'] = @fields.collect(&:to_h) if @fields
         hash['id'] = @id unless @id.nil?
         hash['paymentMethod'] = @payment_method unless @payment_method.nil?
@@ -67,6 +70,13 @@ module Ingenico::Direct::SDK
         if hash.key? 'displayHints'
           raise TypeError, "value '%s' is not a Hash" % [hash['displayHints']] unless hash['displayHints'].is_a? Hash
           @display_hints = Ingenico::Direct::SDK::Domain::PaymentProductDisplayHints.new_from_hash(hash['displayHints'])
+        end
+        if hash.key? 'displayHintsList'
+          raise TypeError, "value '%s' is not an Array" % [hash['displayHintsList']] unless hash['displayHintsList'].is_a? Array
+          @display_hints_list = []
+          hash['displayHintsList'].each do |e|
+            @display_hints_list << Ingenico::Direct::SDK::Domain::PaymentProductDisplayHints.new_from_hash(e)
+          end
         end
         if hash.key? 'fields'
           raise TypeError, "value '%s' is not an Array" % [hash['fields']] unless hash['fields'].is_a? Array
