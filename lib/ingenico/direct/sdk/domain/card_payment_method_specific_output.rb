@@ -5,13 +5,16 @@
 require 'ingenico/direct/sdk/data_object'
 require 'ingenico/direct/sdk/domain/card_essentials'
 require 'ingenico/direct/sdk/domain/card_fraud_results'
+require 'ingenico/direct/sdk/domain/external_token_linked'
 require 'ingenico/direct/sdk/domain/three_d_secure_results'
 
 module Ingenico::Direct::SDK
   module Domain
 
+    # @attr [Long] authenticated_amount
     # @attr [String] authorisation_code
     # @attr [Ingenico::Direct::SDK::Domain::CardEssentials] card
+    # @attr [Ingenico::Direct::SDK::Domain::ExternalTokenLinked] external_token_linked
     # @attr [Ingenico::Direct::SDK::Domain::CardFraudResults] fraud_results
     # @attr [String] initial_scheme_transaction_id
     # @attr [String] payment_option
@@ -19,8 +22,10 @@ module Ingenico::Direct::SDK
     # @attr [Ingenico::Direct::SDK::Domain::ThreeDSecureResults] three_d_secure_results
     # @attr [String] token
     class CardPaymentMethodSpecificOutput < Ingenico::Direct::SDK::DataObject
+      attr_accessor :authenticated_amount
       attr_accessor :authorisation_code
       attr_accessor :card
+      attr_accessor :external_token_linked
       attr_accessor :fraud_results
       attr_accessor :initial_scheme_transaction_id
       attr_accessor :payment_option
@@ -31,8 +36,10 @@ module Ingenico::Direct::SDK
       # @return (Hash)
       def to_h
         hash = super
+        hash['authenticatedAmount'] = @authenticated_amount unless @authenticated_amount.nil?
         hash['authorisationCode'] = @authorisation_code unless @authorisation_code.nil?
         hash['card'] = @card.to_h if @card
+        hash['externalTokenLinked'] = @external_token_linked.to_h if @external_token_linked
         hash['fraudResults'] = @fraud_results.to_h if @fraud_results
         hash['initialSchemeTransactionId'] = @initial_scheme_transaction_id unless @initial_scheme_transaction_id.nil?
         hash['paymentOption'] = @payment_option unless @payment_option.nil?
@@ -44,10 +51,15 @@ module Ingenico::Direct::SDK
 
       def from_hash(hash)
         super
+        @authenticated_amount = hash['authenticatedAmount'] if hash.key? 'authenticatedAmount'
         @authorisation_code = hash['authorisationCode'] if hash.key? 'authorisationCode'
         if hash.key? 'card'
           raise TypeError, "value '%s' is not a Hash" % [hash['card']] unless hash['card'].is_a? Hash
           @card = Ingenico::Direct::SDK::Domain::CardEssentials.new_from_hash(hash['card'])
+        end
+        if hash.key? 'externalTokenLinked'
+          raise TypeError, "value '%s' is not a Hash" % [hash['externalTokenLinked']] unless hash['externalTokenLinked'].is_a? Hash
+          @external_token_linked = Ingenico::Direct::SDK::Domain::ExternalTokenLinked.new_from_hash(hash['externalTokenLinked'])
         end
         if hash.key? 'fraudResults'
           raise TypeError, "value '%s' is not a Hash" % [hash['fraudResults']] unless hash['fraudResults'].is_a? Hash

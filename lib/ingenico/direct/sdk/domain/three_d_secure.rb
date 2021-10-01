@@ -10,6 +10,7 @@ require 'ingenico/direct/sdk/domain/three_d_secure_data'
 module Ingenico::Direct::SDK
   module Domain
 
+    # @attr [Long] authentication_amount
     # @attr [String] challenge_canvas_size
     # @attr [String] challenge_indicator
     # @attr [String] exemption_request
@@ -21,6 +22,7 @@ module Ingenico::Direct::SDK
     # @attr [true/false] skip_authentication
     # @attr [true/false] skip_soft_decline
     class ThreeDSecure < Ingenico::Direct::SDK::DataObject
+      attr_accessor :authentication_amount
       attr_accessor :challenge_canvas_size
       attr_accessor :challenge_indicator
       attr_accessor :exemption_request
@@ -35,6 +37,7 @@ module Ingenico::Direct::SDK
       # @return (Hash)
       def to_h
         hash = super
+        hash['authenticationAmount'] = @authentication_amount unless @authentication_amount.nil?
         hash['challengeCanvasSize'] = @challenge_canvas_size unless @challenge_canvas_size.nil?
         hash['challengeIndicator'] = @challenge_indicator unless @challenge_indicator.nil?
         hash['exemptionRequest'] = @exemption_request unless @exemption_request.nil?
@@ -50,6 +53,7 @@ module Ingenico::Direct::SDK
 
       def from_hash(hash)
         super
+        @authentication_amount = hash['authenticationAmount'] if hash.key? 'authenticationAmount'
         @challenge_canvas_size = hash['challengeCanvasSize'] if hash.key? 'challengeCanvasSize'
         @challenge_indicator = hash['challengeIndicator'] if hash.key? 'challengeIndicator'
         @exemption_request = hash['exemptionRequest'] if hash.key? 'exemptionRequest'
