@@ -25,40 +25,10 @@ module Ingenico::Direct::SDK
         super(parent, path_context)
       end
 
-      # Resource /v2/!{merchantId}/products
-      # @return [Ingenico::Direct::SDK::Merchant::Products::ProductsClient]
-      def products
-        Ingenico::Direct::SDK::Merchant::Products::ProductsClient.new(self, nil)
-      end
-
-      # Resource /v2/!{merchantId}/sessions
-      # @return [Ingenico::Direct::SDK::Merchant::Sessions::SessionsClient]
-      def sessions
-        Ingenico::Direct::SDK::Merchant::Sessions::SessionsClient.new(self, nil)
-      end
-
-      # Resource /v2/!{merchantId}/payouts
-      # @return [Ingenico::Direct::SDK::Merchant::Payouts::PayoutsClient]
-      def payouts
-        Ingenico::Direct::SDK::Merchant::Payouts::PayoutsClient.new(self, nil)
-      end
-
-      # Resource /v2/!{merchantId}/payments
-      # @return [Ingenico::Direct::SDK::Merchant::Payments::PaymentsClient]
-      def payments
-        Ingenico::Direct::SDK::Merchant::Payments::PaymentsClient.new(self, nil)
-      end
-
-      # Resource /v2/!{merchantId}/services
-      # @return [Ingenico::Direct::SDK::Merchant::Services::ServicesClient]
-      def services
-        Ingenico::Direct::SDK::Merchant::Services::ServicesClient.new(self, nil)
-      end
-
-      # Resource /v2/!{merchantId}/productgroups
-      # @return [Ingenico::Direct::SDK::Merchant::ProductGroups::ProductGroupsClient]
-      def product_groups
-        Ingenico::Direct::SDK::Merchant::ProductGroups::ProductGroupsClient.new(self, nil)
+      # Resource /v2/!{merchantId}/hostedcheckouts
+      # @return [Ingenico::Direct::SDK::Merchant::HostedCheckout::HostedCheckoutClient]
+      def hosted_checkout
+        Ingenico::Direct::SDK::Merchant::HostedCheckout::HostedCheckoutClient.new(self, nil)
       end
 
       # Resource /v2/!{merchantId}/hostedtokenizations
@@ -67,16 +37,46 @@ module Ingenico::Direct::SDK
         Ingenico::Direct::SDK::Merchant::HostedTokenization::HostedTokenizationClient.new(self, nil)
       end
 
+      # Resource /v2/!{merchantId}/payments
+      # @return [Ingenico::Direct::SDK::Merchant::Payments::PaymentsClient]
+      def payments
+        Ingenico::Direct::SDK::Merchant::Payments::PaymentsClient.new(self, nil)
+      end
+
+      # Resource /v2/!{merchantId}/payouts
+      # @return [Ingenico::Direct::SDK::Merchant::Payouts::PayoutsClient]
+      def payouts
+        Ingenico::Direct::SDK::Merchant::Payouts::PayoutsClient.new(self, nil)
+      end
+
+      # Resource /v2/!{merchantId}/productgroups
+      # @return [Ingenico::Direct::SDK::Merchant::ProductGroups::ProductGroupsClient]
+      def product_groups
+        Ingenico::Direct::SDK::Merchant::ProductGroups::ProductGroupsClient.new(self, nil)
+      end
+
+      # Resource /v2/!{merchantId}/products
+      # @return [Ingenico::Direct::SDK::Merchant::Products::ProductsClient]
+      def products
+        Ingenico::Direct::SDK::Merchant::Products::ProductsClient.new(self, nil)
+      end
+
+      # Resource /v2/!{merchantId}/services
+      # @return [Ingenico::Direct::SDK::Merchant::Services::ServicesClient]
+      def services
+        Ingenico::Direct::SDK::Merchant::Services::ServicesClient.new(self, nil)
+      end
+
+      # Resource /v2/!{merchantId}/sessions
+      # @return [Ingenico::Direct::SDK::Merchant::Sessions::SessionsClient]
+      def sessions
+        Ingenico::Direct::SDK::Merchant::Sessions::SessionsClient.new(self, nil)
+      end
+
       # Resource /v2/!{merchantId}/tokens
       # @return [Ingenico::Direct::SDK::Merchant::Tokens::TokensClient]
       def tokens
         Ingenico::Direct::SDK::Merchant::Tokens::TokensClient.new(self, nil)
-      end
-
-      # Resource /v2/!{merchantId}/hostedcheckouts
-      # @return [Ingenico::Direct::SDK::Merchant::HostedCheckout::HostedCheckoutClient]
-      def hosted_checkout
-        Ingenico::Direct::SDK::Merchant::HostedCheckout::HostedCheckoutClient.new(self, nil)
       end
     end
   end
