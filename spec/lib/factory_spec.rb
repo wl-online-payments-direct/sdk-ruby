@@ -1,13 +1,13 @@
 require 'spec_helper'
 require 'uri'
 
-Factory ||= Ingenico::Direct::SDK::Factory
+Factory ||= OnlinePayments::SDK::Factory
 
 describe 'Factory' do
   it 'can initialize configurations' do
     configuration = Factory.create_configuration(PROPERTIES_URI, API_KEY_ID, SECRET_API_KEY)
 
-    expect(configuration.api_endpoint).to eq('https://payment.preprod.direct.ingenico.com')
+    expect(configuration.api_endpoint).to eq('https://payment.preprod.online-payments.com')
     expect(configuration.authorization_type).to eq('v1HMAC')
     expect(configuration.connect_timeout).to eq(-1)
     expect(configuration.socket_timeout).to eq(-1)
@@ -24,13 +24,13 @@ describe 'Factory' do
     meta_data_provider = communicator.meta_data_provider
     request_headers = meta_data_provider.meta_data_headers
 
-    expect(communicator.marshaller).to be(Ingenico::Direct::SDK::DefaultImpl::DefaultMarshaller.INSTANCE)
-    expect(connection).to be_an_instance_of(Ingenico::Direct::SDK::DefaultImpl::DefaultConnection)
-    expect(authenticator).to be_an_instance_of(Ingenico::Direct::SDK::DefaultImpl::DefaultAuthenticator)
-    expect(meta_data_provider).to be_an_instance_of(Ingenico::Direct::SDK::MetaDataProvider)
+    expect(communicator.marshaller).to be(OnlinePayments::SDK::DefaultImpl::DefaultMarshaller.INSTANCE)
+    expect(connection).to be_an_instance_of(OnlinePayments::SDK::DefaultImpl::DefaultConnection)
+    expect(authenticator).to be_an_instance_of(OnlinePayments::SDK::DefaultImpl::DefaultAuthenticator)
+    expect(meta_data_provider).to be_an_instance_of(OnlinePayments::SDK::MetaDataProvider)
 
     expect(authenticator.instance_variable_get(:@authorization_type))
-        .to eq(Ingenico::Direct::SDK::DefaultImpl::AuthorizationType::V1HMAC)
+      .to eq(OnlinePayments::SDK::DefaultImpl::AuthorizationType::V1HMAC)
     expect(authenticator.instance_variable_get(:@api_key_id)).to eq(API_KEY_ID)
     expect(authenticator.instance_variable_get(:@secret_api_key)).to eq(SECRET_API_KEY)
 

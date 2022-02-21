@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'ingenico/direct/sdk/merchant/products/get_payment_products_params'
-require 'ingenico/direct/sdk/merchant/productgroups/get_product_groups_params'
+require 'onlinepayments/sdk/merchant/products/get_payment_products_params'
+require 'onlinepayments/sdk/merchant/productgroups/get_product_groups_params'
 
-RequestParam ||= Ingenico::Direct::SDK::RequestParam
+RequestParam ||= OnlinePayments::SDK::RequestParam
 
 shared_examples_for 'GetPaymentProduct(Group)sParams' do
 
@@ -42,17 +42,17 @@ shared_examples_for 'GetPaymentProduct(Group)sParams' do
   end
 end
 
-GetPaymentProductsParams ||= Ingenico::Direct::SDK::Merchant::Products::GetPaymentProductsParams
-GetProductGroupsParams ||= Ingenico::Direct::SDK::Merchant::ProductGroups::GetProductGroupsParams
+GetPaymentProductsParams ||= OnlinePayments::SDK::Merchant::Products::GetPaymentProductsParams
+GetProductGroupsParams ||= OnlinePayments::SDK::Merchant::ProductGroups::GetProductGroupsParams
 
 describe GetPaymentProductsParams do
-  let(:params){GetPaymentProductsParams.new}
+  let(:params) { GetPaymentProductsParams.new }
 
   it_behaves_like 'GetPaymentProduct(Group)sParams'
 end
 
 describe GetProductGroupsParams do
-  let(:params){GetProductGroupsParams.new}
+  let(:params) { GetProductGroupsParams.new }
 
   it_behaves_like 'GetPaymentProduct(Group)sParams'
 end\

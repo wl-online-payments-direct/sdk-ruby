@@ -2,10 +2,10 @@ require 'uri'
 require 'spec_helper'
 
 describe 'DefaultAuthenticator' do
-  RequestHeader ||= Ingenico::Direct::SDK::RequestHeader
+  RequestHeader ||= OnlinePayments::SDK::RequestHeader
 
-  let(:authenticator) {Ingenico::Direct::SDK::DefaultImpl::DefaultAuthenticator.new(
-      'apiKeyId', 'secretApiKey', Ingenico::Direct::SDK::DefaultImpl::AuthorizationType.get_authorization('V1HMAC'))}
+  let(:authenticator) { OnlinePayments::SDK::DefaultImpl::DefaultAuthenticator.new(
+    'apiKeyId', 'secretApiKey', OnlinePayments::SDK::DefaultImpl::AuthorizationType.get_authorization('V1HMAC')) }
 
   it 'should canonicalize headers' do
     expect(authenticator.send(:to_canonical_header_value, "aap\nnoot  ")).to eq('aap noot')
@@ -15,24 +15,24 @@ describe 'DefaultAuthenticator' do
   # Tests if a request can be converted to a canonical format to sign
   it 'converts a request properly to signable data' do
     http_headers = [RequestHeader.new('X-GCS-ServerMetaInfo',
-                                       '{"platformIdentifier":"Windows 7/6.1 Java/1.7 (Oracle Corporation; '+
-                                       'Java HotSpot(TM) 64-Bit Server VM; 1.7.0_45)","sdkIdentifier":"1.0"}'),
+                                      '{"platformIdentifier":"Windows 7/6.1 Java/1.7 (Oracle Corporation; ' +
+                                        'Java HotSpot(TM) 64-Bit Server VM; 1.7.0_45)","sdkIdentifier":"1.0"}'),
                     RequestHeader.new('Content-Type', 'application/json'),
                     RequestHeader.new('X-GCS-ClientMetaInfo', '{"aap","noot"}'),
                     RequestHeader.new('User-Agent', 'Apache-HttpClient/4.3.4 (java 1.5)'),
                     RequestHeader.new('Date', 'Mon, 07 Jul 2014 12:12:40 GMT')]
 
-    expected_start = "POST\n"+
-                     "application/json\n"
+    expected_start = "POST\n" +
+      "application/json\n"
     expected_end = %Q(x-gcs-clientmetainfo:{"aap","noot"}\n) +
-                   %Q(x-gcs-servermetainfo:{"platformIdentifier":"Windows 7/6.1 Java/1.7 )+
-                    %Q((Oracle Corporation; Java HotSpot(TM) 64-Bit Server VM; 1.7.0_45)",)+
-                    %Q("sdkIdentifier":"1.0"}\n)+
-                   %Q(/v2/9991/services%20bla/convert/amount?aap=noot&mies=geen%20noot\n)
+      %Q(x-gcs-servermetainfo:{"platformIdentifier":"Windows 7/6.1 Java/1.7 ) +
+      %Q((Oracle Corporation; Java HotSpot(TM) 64-Bit Server VM; 1.7.0_45)",) +
+      %Q("sdkIdentifier":"1.0"}\n) +
+      %Q(/v2/9991/services%20bla/convert/amount?aap=noot&mies=geen%20noot\n)
 
     data_to_sign = authenticator.send(:to_data_to_sign, 'POST',
-                           URI('http://localhost:8080/v2/9991/services%20bla/convert/amount?aap=noot&mies=geen%20noot'),
-                           http_headers)
+                                      URI('http://localhost:8080/v2/9991/services%20bla/convert/amount?aap=noot&mies=geen%20noot'),
+                                      http_headers)
 
     # NOTE: Ruby has two types of range about end point:
     # 1) inclusive: 0..1 => 0, 1
@@ -45,13 +45,13 @@ describe 'DefaultAuthenticator' do
 
   context 'create_authentication_signature' do
     it 'creates authentication signatures' do
-      data_to_sign = "DELETE\n"+
-          "application/json\n"+
-          "Fri, 06 Jun 2014 13:39:43 GMT\n"+
-          "x-gcs-clientmetainfo:processed header value\n"+
-          "x-gcs-customerheader:processed header value\n"+
-          "x-gcs-servermetainfo:processed header value\n"+
-          "/v1/9991/tokens/123456789\n"
+      data_to_sign = "DELETE\n" +
+        "application/json\n" +
+        "Fri, 06 Jun 2014 13:39:43 GMT\n" +
+        "x-gcs-clientmetainfo:processed header value\n" +
+        "x-gcs-customerheader:processed header value\n" +
+        "x-gcs-servermetainfo:processed header value\n" +
+        "/v1/9991/tokens/123456789\n"
 
       authentication_signature = authenticator.send(:create_auth_signature, data_to_sign)
 
@@ -59,12 +59,12 @@ describe 'DefaultAuthenticator' do
     end
 
     it 'creates authentication signatures for more than one key' do
-      authenticator = Ingenico::Direct::SDK::DefaultImpl::DefaultAuthenticator.new(
-        'apiKeyId', '6Kj5HT0MQKC6D8eb7W3lTg71kVKVDSt1', Ingenico::Direct::SDK::DefaultImpl::AuthorizationType.get_authorization('v1hmac'))
-      data_to_sign = "GET\n"+
-                     "\n"+
-                     "Fri, 06 Jun 2014 13:39:43 GMT\n"+
-                     "/v1/9991/tokens/123456789\n"
+      authenticator = OnlinePayments::SDK::DefaultImpl::DefaultAuthenticator.new(
+        'apiKeyId', '6Kj5HT0MQKC6D8eb7W3lTg71kVKVDSt1', OnlinePayments::SDK::DefaultImpl::AuthorizationType.get_authorization('v1hmac'))
+      data_to_sign = "GET\n" +
+        "\n" +
+        "Fri, 06 Jun 2014 13:39:43 GMT\n" +
+        "/v1/9991/tokens/123456789\n"
 
       authentication_signature = authenticator.send(:create_auth_signature, data_to_sign)
 

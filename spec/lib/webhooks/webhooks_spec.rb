@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-include Ingenico::Direct::SDK
+include OnlinePayments::SDK
 
 describe Webhooks::Webhooks do
   let(:webhooks_helper) { Webhooks::Webhooks.create_helper(Webhooks::InMemorySecretKeyStore.instance) }

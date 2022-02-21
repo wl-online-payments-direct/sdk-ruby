@@ -1,17 +1,17 @@
 require 'spec_helper'
 require 'securerandom'
-require 'ingenico/direct/sdk/domain/card'
-require 'ingenico/direct/sdk/domain/card_payout_method_specific_input'
-require 'ingenico/direct/sdk/domain/create_payment_request'
-require 'ingenico/direct/sdk/domain/customer'
-require 'ingenico/direct/sdk/domain/order'
+require 'onlinepayments/sdk/domain/card'
+require 'onlinepayments/sdk/domain/card_payout_method_specific_input'
+require 'onlinepayments/sdk/domain/create_payment_request'
+require 'onlinepayments/sdk/domain/customer'
+require 'onlinepayments/sdk/domain/order'
 
-Domain ||= Ingenico::Direct::SDK::Domain
+Domain ||= OnlinePayments::SDK::Domain
 
 describe 'DefaultConnectionIdempotence' do
 
-  CallContext = Ingenico::Direct::SDK::CallContext
-  base_headers = {'dummy' => 'none'}
+  CallContext = OnlinePayments::SDK::CallContext
+  base_headers = { 'dummy' => 'none' }
   resource_prefix = 'spec/fixtures/resources/defaultimpl/'
 
   it 'should be able to send a request with idempotence key' do
@@ -20,10 +20,10 @@ describe 'DefaultConnectionIdempotence' do
     call_context = CallContext.new(idempotence_key)
     request = create_payment_request
 
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .with(headers: {'X-GCS-Idempotence-Key' => idempotence_key})
-        .to_return(status: 201, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json', 'Location' => 'payment.preprod.direct.ingenico.com/v2/1234/payments/1_1'}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .with(headers: { 'X-GCS-Idempotence-Key' => idempotence_key })
+      .to_return(status: 201, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json', 'Location' => 'payment.preprod.online-payments.com/v2/1234/payments/1_1' }))
 
     response = CLIENT.merchant('1234').payments.create_payment(request, call_context)
 
@@ -36,17 +36,16 @@ describe 'DefaultConnectionIdempotence' do
   it 'properly reports when the request has arrived prior' do
     response_body = IO.read("#{resource_prefix}idempotence_success.json")
     idempotence_key = SecureRandom.uuid
-    idempotence_timestamp = Time.now.to_f*1000  # Convert time to milliseconds
+    idempotence_timestamp = Time.now.to_f * 1000 # Convert time to milliseconds
     call_context = CallContext.new(idempotence_key)
     request = create_payment_request
 
-
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .with(headers: {'X-GCS-Idempotence-Key' => idempotence_key})
-        .to_return(status: 201, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json',
-                                                'Location' => 'payment.preprod.direct.ingenico.com/v2/1234/payments/1_1',
-                                                'X-GCS-Idempotence-Request-Timestamp' => idempotence_timestamp}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .with(headers: { 'X-GCS-Idempotence-Key' => idempotence_key })
+      .to_return(status: 201, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json',
+                                               'Location' => 'payment.preprod.online-payments.com/v2/1234/payments/1_1',
+                                               'X-GCS-Idempotence-Request-Timestamp' => idempotence_timestamp }))
 
     response = CLIENT.merchant('1234').payments.create_payment(request, call_context)
 
@@ -63,62 +62,62 @@ describe 'DefaultConnectionIdempotence' do
     call_context = CallContext.new(idempotence_key)
     request = create_payment_request
 
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .with(headers: {'X-GCS-Idempotence-Key' => idempotence_key})
-        .to_return(status: 402, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json'}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .with(headers: { 'X-GCS-Idempotence-Key' => idempotence_key })
+      .to_return(status: 402, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json' }))
 
-    expect{response = CLIENT.merchant('1234').payments.create_payment(request, call_context)}.
-        to raise_error(Ingenico::Direct::SDK::DeclinedPaymentException){ |err|
-      expect(err.status_code).to eq(402)
-      expect(err.response_body).to eq(response_body)
-      expect(call_context.idempotence_key).to eq(idempotence_key)
-      expect(call_context.idempotence_request_timestamp).to be_nil
-    }
+    expect { response = CLIENT.merchant('1234').payments.create_payment(request, call_context) }.
+      to raise_error(OnlinePayments::SDK::DeclinedPaymentException) { |err|
+        expect(err.status_code).to eq(402)
+        expect(err.response_body).to eq(response_body)
+        expect(call_context.idempotence_key).to eq(idempotence_key)
+        expect(call_context.idempotence_request_timestamp).to be_nil
+      }
   end
 
   it 'reports idempotence failure when another request has been sent prior' do
     response_body = IO.read("#{resource_prefix}idempotence_rejected.json")
     idempotence_key = SecureRandom.uuid
-    idempotence_timestamp = Time.now.to_f*1000  # Convert time to milliseconds
+    idempotence_timestamp = Time.now.to_f * 1000 # Convert time to milliseconds
     call_context = CallContext.new(idempotence_key)
     request = create_payment_request
 
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .with(headers: {'X-GCS-Idempotence-Key' => idempotence_key})
-        .to_return(status: 402, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json',
-                                                'X-GCS-Idempotence-Request-Timestamp' => idempotence_timestamp}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .with(headers: { 'X-GCS-Idempotence-Key' => idempotence_key })
+      .to_return(status: 402, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json',
+                                               'X-GCS-Idempotence-Request-Timestamp' => idempotence_timestamp }))
 
-    expect{response = CLIENT.merchant('1234').payments.create_payment(request, call_context)}.
-        to raise_error(Ingenico::Direct::SDK::DeclinedPaymentException){ |err|
-      expect(err.status_code).to eq(402)
-      expect(err.response_body).to eq(response_body)
-      expect(call_context.idempotence_key).to eq(idempotence_key)
-      expect(call_context.idempotence_request_timestamp.to_s).to eq(idempotence_timestamp.to_s)
-    }
+    expect { response = CLIENT.merchant('1234').payments.create_payment(request, call_context) }.
+      to raise_error(OnlinePayments::SDK::DeclinedPaymentException) { |err|
+        expect(err.status_code).to eq(402)
+        expect(err.response_body).to eq(response_body)
+        expect(call_context.idempotence_key).to eq(idempotence_key)
+        expect(call_context.idempotence_request_timestamp.to_s).to eq(idempotence_timestamp.to_s)
+      }
   end
 
   it 'reports idempotence failure when another request is still in progress' do
     response_body = IO.read("#{resource_prefix}idempotence_duplicate_failure.json")
     idempotence_key = SecureRandom.uuid
-    idempotence_timestamp = Time.now.to_f*1000  # Convert time to milliseconds
+    idempotence_timestamp = Time.now.to_f * 1000 # Convert time to milliseconds
     call_context = CallContext.new(idempotence_key)
     request = create_payment_request
 
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .with(headers: {'X-GCS-Idempotence-Key' => idempotence_key})
-        .to_return(status: 409, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json',
-                                                'X-GCS-Idempotence-Request-Timestamp' => idempotence_timestamp}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .with(headers: { 'X-GCS-Idempotence-Key' => idempotence_key })
+      .to_return(status: 409, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json',
+                                               'X-GCS-Idempotence-Request-Timestamp' => idempotence_timestamp }))
 
-    expect{response = CLIENT.merchant('1234').payments.create_payment(request, call_context)}.
-        to raise_error(Ingenico::Direct::SDK::IdempotenceException){ |err|
-      expect(err.status_code).to eq(409)
-      expect(err.response_body).to eq(response_body)
-      expect(call_context.idempotence_key).to eq(idempotence_key)
-      expect(call_context.idempotence_request_timestamp.to_s).to eq(idempotence_timestamp.to_s)
-    }
+    expect { response = CLIENT.merchant('1234').payments.create_payment(request, call_context) }.
+      to raise_error(OnlinePayments::SDK::IdempotenceException) { |err|
+        expect(err.status_code).to eq(409)
+        expect(err.response_body).to eq(response_body)
+        expect(call_context.idempotence_key).to eq(idempotence_key)
+        expect(call_context.idempotence_request_timestamp.to_s).to eq(idempotence_timestamp.to_s)
+      }
   end
 end
 

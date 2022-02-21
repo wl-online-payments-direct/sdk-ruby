@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-HeaderObfuscator ||= Ingenico::Direct::SDK::Logging::HeaderObfuscator
-ValueObfuscator ||= Ingenico::Direct::SDK::Logging::ValueObfuscator
+HeaderObfuscator ||= OnlinePayments::SDK::Logging::HeaderObfuscator
+ValueObfuscator ||= OnlinePayments::SDK::Logging::ValueObfuscator
 
 describe HeaderObfuscator do
   subject(:sample) { HeaderObfuscator.new(obsfs) }

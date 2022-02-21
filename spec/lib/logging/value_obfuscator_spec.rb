@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-include Ingenico::Direct::SDK::Logging
+include OnlinePayments::SDK::Logging
 
 describe ValueObfuscator do
   it 'cannot be explicitly instantiated' do
-    expect{ValueObfuscator.new
+    expect { ValueObfuscator.new
     }.to raise_error(NoMethodError)
 
-    expect{ValueObfuscator.private_new
+    expect { ValueObfuscator.private_new
     }.to raise_error(NoMethodError)
   end
 

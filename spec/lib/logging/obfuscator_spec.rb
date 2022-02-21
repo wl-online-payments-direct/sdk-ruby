@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-Obfuscator ||= Ingenico::Direct::SDK::Logging::Obfuscator
-ValueObfuscator ||= Ingenico::Direct::SDK::Logging::ValueObfuscator
+Obfuscator ||= OnlinePayments::SDK::Logging::Obfuscator
+ValueObfuscator ||= OnlinePayments::SDK::Logging::ValueObfuscator
 
 describe Obfuscator do
   subject(:sample) { Obfuscator.new(obsfs, case_insensitive) }

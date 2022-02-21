@@ -3,9 +3,9 @@ require 'uri'
 require 'stringio'
 require 'sinatra'
 
-ResponseHeader ||= Ingenico::Direct::SDK::ResponseHeader
-DefaultConnection ||= Ingenico::Direct::SDK::DefaultImpl::DefaultConnection
-StdoutCommunicatorLogger ||= Ingenico::Direct::SDK::Logging::StdoutCommunicatorLogger
+ResponseHeader ||= OnlinePayments::SDK::ResponseHeader
+DefaultConnection ||= OnlinePayments::SDK::DefaultImpl::DefaultConnection
+StdoutCommunicatorLogger ||= OnlinePayments::SDK::Logging::StdoutCommunicatorLogger
 
 describe DefaultConnection do
   let(:connect_timeout) { 10 }
@@ -14,9 +14,9 @@ describe DefaultConnection do
   let(:proxy_configuration) { nil }
   subject(:connection) do
     described_class.new(connect_timeout: connect_timeout,
-                          socket_timeout: socket_timeout,
-                          max_connections: max_connections,
-                          proxy_configuration: proxy_configuration)
+                        socket_timeout: socket_timeout,
+                        max_connections: max_connections,
+                        proxy_configuration: proxy_configuration)
   end
 
   context 'construction' do
@@ -43,7 +43,7 @@ describe DefaultConnection do
       let(:uri) { URI('http://test-proxy') }
 
       context 'without authentication' do
-        let(:proxy_configuration) { Ingenico::Direct::SDK::ProxyConfiguration.new(address: uri) }
+        let(:proxy_configuration) { OnlinePayments::SDK::ProxyConfiguration.new(address: uri) }
 
         it 'has the correct timeout values and proxy settings' do
           expect(
@@ -72,9 +72,9 @@ describe DefaultConnection do
         let(:username) { 'test-username' }
         let(:password) { 'test-password' }
         let(:proxy_configuration) do
-          Ingenico::Direct::SDK::ProxyConfiguration.new(address: uri,
-                                      username: username,
-                                      password: password)
+          OnlinePayments::SDK::ProxyConfiguration.new(address: uri,
+                                                      username: username,
+                                                      password: password)
         end
 
         it 'has the correct timeout values and proxy settings' do
@@ -161,11 +161,11 @@ describe DefaultConnection do
       end
 
       let(:headers) { { 'Content-Type' => 'application/json', 'header1' => 'dummy', 'header2' => 'yammy' } }
-      let(:sdk_headers) { headers.map {|k, v| Ingenico::Direct::SDK::ResponseHeader.new(k, v) } }
+      let(:sdk_headers) { headers.map { |k, v| OnlinePayments::SDK::ResponseHeader.new(k, v) } }
       let(:uri) { URI('http://foobar.com/v2/1234/services/convert/amount?source=EUR&amount=1000&target=USD') }
 
       def expected_header_str(headers)
-        headers.inject('') { |str, (k, v)| %Q{#{str}#{k}='#{v}', }}.chomp(', ')
+        headers.inject('') { |str, (k, v)| %Q{#{str}#{k}='#{v}', } }.chomp(', ')
       end
 
       def sdk_headers_to_s(sdk_headers)

@@ -1,10 +1,10 @@
 require 'spec_helper'
-require 'ingenico/direct/sdk/domain/amount_of_money'
-require 'ingenico/direct/sdk/domain/card'
-require 'ingenico/direct/sdk/domain/card_payment_method_specific_input'
-require 'ingenico/direct/sdk/domain/create_payment_request'
-require 'ingenico/direct/sdk/domain/customer'
-require 'ingenico/direct/sdk/domain/order'
+require 'onlinepayments/sdk/domain/amount_of_money'
+require 'onlinepayments/sdk/domain/card'
+require 'onlinepayments/sdk/domain/card_payment_method_specific_input'
+require 'onlinepayments/sdk/domain/create_payment_request'
+require 'onlinepayments/sdk/domain/customer'
+require 'onlinepayments/sdk/domain/order'
 require 'httpclient'
 
 # define module first so we can include them
@@ -12,8 +12,8 @@ require 'httpclient'
 module ValidationDict
   REQUEST_START = %r(Outgoing request \(requestId="([-a-zA-Z0-9]+)"\):)
   RESPONSE_START = %r(Incoming response \(requestId="([-a-zA-Z0-9]+)", \d+.\d* ms\):)
-  GET_METHOD    = %r(method:       "GET")
-  POST_METHOD   = %r(method:       "POST")
+  GET_METHOD = %r(method:       "GET")
+  POST_METHOD = %r(method:       "POST")
   DELETE_METHOD = %r(method:       "DELETE")
   STATUS_200 = %r(status-code:  "200")
   STATUS_201 = %r(status-code:  "201")
@@ -28,7 +28,7 @@ module ValidationDict
   DUMMY_HEADER = %r(Dummy='none')
   DATA_JSON_HEADER = %r(Content-Type='application/json')
   DATA_JSON = %r(content-type: "application/json")
-  UNICODE_BODY_NAME= %r(Zavéntem)
+  UNICODE_BODY_NAME = %r(Zavéntem)
 
   def validate_request_headers(message)
     expect(message).to match(DATEHEADER)
@@ -110,7 +110,7 @@ module ValidationDict
     message =~ RESPONSE_START
     id = $1 # capture id from the regular expression above
     expect(message).to match(STATUS_201)
-    expect(message).to match(%r(Location='payment\.preprod\.direct\.ingenico\.com/v2/1234/payments/1_1'))
+    expect(message).to match(%r(Location='payment\.preprod\.online-payments\.com/v2/1234/payments/1_1'))
     expect(message).to match(DATA_JSON_HEADER)
     # expect(message).to match(DUMMY_HEADER)
     expect(message).to match(DATEHEADER)
@@ -139,7 +139,7 @@ module ValidationDict
     message =~ RESPONSE_START
     id = $1 # capture id from the regular expression above
     expect(message).to match(STATUS_201)
-    expect(message).to match(%r(Location='payment\.preprod\.direct\.ingenico\.com/v2/1234/payments/1_1'))
+    expect(message).to match(%r(Location='payment\.preprod\.online-payments\.com/v2/1234/payments/1_1'))
     expect(message).to match(DATA_JSON_HEADER)
     # expect(message).to match(DUMMY_HEADER)
     expect(message).to match(DATEHEADER)
@@ -221,7 +221,6 @@ module ValidationDict
   end
 end
 
-
 # -----test examples-----:
 
 describe 'DefaultConnectionLogging' do
@@ -229,16 +228,16 @@ describe 'DefaultConnectionLogging' do
   include ValidationDict
 
   let(:logger) { TestLogger.new }
-  base_headers = {'dummy' => 'none', 'Date' => 'Mon, 1 Jan 2000 00:00:00 GMT'}
+  base_headers = { 'dummy' => 'none', 'Date' => 'Mon, 1 Jan 2000 00:00:00 GMT' }
   resource_prefix = 'spec/fixtures/resources/defaultimpl/'
 
   # tests testconnection
   it 'should be able to log a simple request' do
     response_body = IO.read("#{resource_prefix}testConnection.json")
 
-    stub_request(:get, 'https://payment.preprod.direct.ingenico.com/v2/1234/services/testconnection')
-        .to_return(status: 200, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json'}))
+    stub_request(:get, 'https://payment.preprod.online-payments.com/v2/1234/services/testconnection')
+      .to_return(status: 200, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json' }))
 
     CLIENT.enable_logging(logger)
     response = CLIENT.merchant('1234').services.test_connection
@@ -251,8 +250,8 @@ describe 'DefaultConnectionLogging' do
 
   # tests delete token
   it 'can log DELETE requests' do
-    stub_request(:delete, 'https://payment.preprod.direct.ingenico.com/v2/1234/tokens/5678')
-        .to_return(status: 204, headers: base_headers)
+    stub_request(:delete, 'https://payment.preprod.online-payments.com/v2/1234/tokens/5678')
+      .to_return(status: 204, headers: base_headers)
 
     CLIENT.enable_logging(logger)
     response = CLIENT.merchant('1234').tokens.delete_token('5678', nil)
@@ -267,10 +266,10 @@ describe 'DefaultConnectionLogging' do
     response_body = IO.read("#{resource_prefix}createPayment.json")
     request = create_payment_request
 
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .to_return(status: 201, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json',
-                                                'Location' => 'payment.preprod.direct.ingenico.com/v2/1234/payments/1_1'}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .to_return(status: 201, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json',
+                                               'Location' => 'payment.preprod.online-payments.com/v2/1234/payments/1_1' }))
 
     CLIENT.enable_logging(logger)
     response = CLIENT.merchant('1234').payments.create_payment(request)
@@ -285,10 +284,10 @@ describe 'DefaultConnectionLogging' do
     response_body = IO.read("#{resource_prefix}createPayment.unicode.json")
     request = create_payment_request
 
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .to_return(status: 201, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json',
-                                                'Location' => 'payment.preprod.direct.ingenico.com/v2/1234/payments/1_1'}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .to_return(status: 201, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json',
+                                               'Location' => 'payment.preprod.online-payments.com/v2/1234/payments/1_1' }))
 
     CLIENT.enable_logging(logger)
     response = CLIENT.merchant('1234').payments.create_payment(request)
@@ -305,12 +304,12 @@ describe 'DefaultConnectionLogging' do
     response_body = IO.read("#{resource_prefix}createPayment.failure.invalidCardNumber.json")
     request = create_payment_request
 
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .to_return(status: 400, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json'}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .to_return(status: 400, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json' }))
 
     CLIENT.enable_logging(logger)
-    expect { CLIENT.merchant('1234').payments.create_payment(request) }.to raise_error(Ingenico::Direct::SDK::ValidationException)
+    expect { CLIENT.merchant('1234').payments.create_payment(request) }.to raise_error(OnlinePayments::SDK::ValidationException)
 
     validate_request_and_response(logger.entries[0], logger.entries[1], 'createPayment_failure_invalidCardNumber')
   end
@@ -320,12 +319,12 @@ describe 'DefaultConnectionLogging' do
     response_body = IO.read("#{resource_prefix}createPayment.failure.rejected.json")
     request = create_payment_request
 
-    stub_request(:post, 'https://payment.preprod.direct.ingenico.com/v2/1234/payments')
-        .to_return(status: 402, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json'}))
+    stub_request(:post, 'https://payment.preprod.online-payments.com/v2/1234/payments')
+      .to_return(status: 402, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json' }))
 
     CLIENT.enable_logging(logger)
-    expect { CLIENT.merchant('1234').payments.create_payment(request) }.to raise_error(Ingenico::Direct::SDK::DeclinedPaymentException)
+    expect { CLIENT.merchant('1234').payments.create_payment(request) }.to raise_error(OnlinePayments::SDK::DeclinedPaymentException)
 
     validate_request_and_response(logger.entries[0], logger.entries[1], 'createPayment_failure_rejected')
   end
@@ -334,12 +333,12 @@ describe 'DefaultConnectionLogging' do
   it 'logs general HTTP errors' do
     response_body = IO.read("#{resource_prefix}unknownServerError.json")
 
-    stub_request(:get, 'https://payment.preprod.direct.ingenico.com/v2/1234/services/testconnection')
-        .to_return(status: 500, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'application/json'}))
+    stub_request(:get, 'https://payment.preprod.online-payments.com/v2/1234/services/testconnection')
+      .to_return(status: 500, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'application/json' }))
 
     CLIENT.enable_logging(logger)
-    expect { CLIENT.merchant('1234').services.test_connection }.to raise_error(Ingenico::Direct::SDK::DirectException)
+    expect { CLIENT.merchant('1234').services.test_connection }.to raise_error(OnlinePayments::SDK::PaymentPlatformException)
 
     validate_request_and_response(logger.entries[0], logger.entries[1], 'testConnection', 'unknownServerError')
   end
@@ -348,23 +347,23 @@ describe 'DefaultConnectionLogging' do
   it 'logs non-json' do
     response_body = IO.read("#{resource_prefix}notFound.html")
 
-    stub_request(:get, 'https://payment.preprod.direct.ingenico.com/v2/1234/services/testconnection')
-        .to_return(status: 404, body: response_body,
-                   headers: base_headers.merge({'Content-Type' => 'text/html'}))
+    stub_request(:get, 'https://payment.preprod.online-payments.com/v2/1234/services/testconnection')
+      .to_return(status: 404, body: response_body,
+                 headers: base_headers.merge({ 'Content-Type' => 'text/html' }))
 
     CLIENT.enable_logging(logger)
-    expect { CLIENT.merchant('1234').services.test_connection }.to raise_error(Ingenico::Direct::SDK::NotFoundException)
+    expect { CLIENT.merchant('1234').services.test_connection }.to raise_error(OnlinePayments::SDK::NotFoundException)
 
     validate_request_and_response(logger.entries[0], logger.entries[1], 'testConnection', 'notFound')
   end
 
   # tests a read timeout
   it 'logs timeouts' do
-    stub_request(:get, 'https://payment.preprod.direct.ingenico.com/v2/1234/services/testconnection')
-        .to_raise(HTTPClient::ReceiveTimeoutError)
+    stub_request(:get, 'https://payment.preprod.online-payments.com/v2/1234/services/testconnection')
+      .to_raise(HTTPClient::ReceiveTimeoutError)
 
     CLIENT.enable_logging(logger)
-    expect { CLIENT.merchant('1234').services.test_connection }.to raise_error(Ingenico::Direct::SDK::CommunicationException)
+    expect { CLIENT.merchant('1234').services.test_connection }.to raise_error(OnlinePayments::SDK::CommunicationException)
 
     request = logger.entries[0]
     expect(request[0]).to_not be_nil
@@ -381,9 +380,9 @@ describe 'DefaultConnectionLogging' do
   it 'can log requests individually' do
     response_body = IO.read("#{resource_prefix}testConnection.json")
 
-    stub_request(:get, 'https://payment.preprod.direct.ingenico.com/v2/1234/services/testconnection')
-        .to_return { |request| CLIENT.disable_logging
-        {body: response_body, status: 200, headers: base_headers.merge({'Content-type' => 'application/json'})} }
+    stub_request(:get, 'https://payment.preprod.online-payments.com/v2/1234/services/testconnection')
+      .to_return { |request| CLIENT.disable_logging
+      { body: response_body, status: 200, headers: base_headers.merge({ 'Content-type' => 'application/json' }) } }
 
     CLIENT.enable_logging(logger)
     response = CLIENT.merchant('1234').services.test_connection
@@ -400,12 +399,12 @@ describe 'DefaultConnectionLogging' do
   it 'can log responses individually' do
     response_body = IO.read("#{resource_prefix}testConnection.json")
 
-    stub_request(:get, 'https://payment.preprod.direct.ingenico.com/v2/1234/services/testconnection')
-        .to_return { |request| CLIENT.enable_logging(logger)
-        {body: response_body, status: 200, headers: base_headers.merge({'Content-type' => 'application/json'})} }
+    stub_request(:get, 'https://payment.preprod.online-payments.com/v2/1234/services/testconnection')
+      .to_return { |request| CLIENT.enable_logging(logger)
+      { body: response_body, status: 200, headers: base_headers.merge({ 'Content-type' => 'application/json' }) } }
 
     id_key = SecureRandom.uuid
-    context = Ingenico::Direct::SDK::CallContext.new(id_key)
+    context = OnlinePayments::SDK::CallContext.new(id_key)
     response = CLIENT.merchant('1234').services.test_connection(context)
 
     expect(response.result).to eq('OK')
@@ -418,13 +417,13 @@ describe 'DefaultConnectionLogging' do
   end
 
   it 'can log errors individually' do
-    stub_request(:get, 'https://payment.preprod.direct.ingenico.com/v2/1234/services/testconnection')
-        .to_return { |request| CLIENT.enable_logging(logger)
-        raise HTTPClient::ReceiveTimeoutError }
+    stub_request(:get, 'https://payment.preprod.online-payments.com/v2/1234/services/testconnection')
+      .to_return { |request| CLIENT.enable_logging(logger)
+      raise HTTPClient::ReceiveTimeoutError }
 
     id_key = SecureRandom.uuid
-    context = Ingenico::Direct::SDK::CallContext.new(id_key)
-    expect { CLIENT.merchant('1234').services.test_connection(context) }.to raise_error(Ingenico::Direct::SDK::CommunicationException)
+    context = OnlinePayments::SDK::CallContext.new(id_key)
+    expect { CLIENT.merchant('1234').services.test_connection(context) }.to raise_error(OnlinePayments::SDK::CommunicationException)
 
     response = logger.entries[0]
     expect(response[0]).to_not be_nil
@@ -489,8 +488,7 @@ def validate_error(error, request_id = nil)
   expect(error_id).to eq(request_id) unless request_id.nil?
 end
 
-
-class TestLogger < Ingenico::Direct::SDK::Logging::CommunicatorLogger
+class TestLogger < OnlinePayments::SDK::Logging::CommunicatorLogger
 
   attr_accessor :entries
 
@@ -503,25 +501,24 @@ class TestLogger < Ingenico::Direct::SDK::Logging::CommunicatorLogger
   end
 end
 
-
 def create_payment_request
-  amount_of_money = Ingenico::Direct::SDK::Domain::AmountOfMoney.new
+  amount_of_money = OnlinePayments::SDK::Domain::AmountOfMoney.new
   amount_of_money.amount = 2345
   amount_of_money.currency_code = 'EUR'
-  customer = Ingenico::Direct::SDK::Domain::Customer.new
-  billing_address = Ingenico::Direct::SDK::Domain::Address.new
+  customer = OnlinePayments::SDK::Domain::Customer.new
+  billing_address = OnlinePayments::SDK::Domain::Address.new
   billing_address.country_code = 'BE'
   customer.billing_address = billing_address
-  order = Ingenico::Direct::SDK::Domain::Order.new
+  order = OnlinePayments::SDK::Domain::Order.new
   order.customer = customer
-  card = Ingenico::Direct::SDK::Domain::Card.new
+  card = OnlinePayments::SDK::Domain::Card.new
   card.cvv = '123'
   card.card_number = '4567350000427977'
   card.expiry_date = '1230'
-  card_payment_method_specific_input = Ingenico::Direct::SDK::Domain::CardPaymentMethodSpecificInput.new
+  card_payment_method_specific_input = OnlinePayments::SDK::Domain::CardPaymentMethodSpecificInput.new
   card_payment_method_specific_input.card = card
   card_payment_method_specific_input.payment_product_id = 1
-  body = Ingenico::Direct::SDK::Domain::CreatePaymentRequest.new
+  body = OnlinePayments::SDK::Domain::CreatePaymentRequest.new
   body.card_payment_method_specific_input = card_payment_method_specific_input
   body
 end

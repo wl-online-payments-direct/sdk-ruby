@@ -1,18 +1,17 @@
 require 'spec_helper'
 
 describe 'Client' do
-  Factory ||= Ingenico::Direct::SDK::Factory
-  Connection ||= Ingenico::Direct::SDK::Connection
-  PooledConnection ||= Ingenico::Direct::SDK::PooledConnection
+  Factory ||= OnlinePayments::SDK::Factory
+  Connection ||= OnlinePayments::SDK::Connection
+  PooledConnection ||= OnlinePayments::SDK::PooledConnection
 
   it 'should return properly modified clients from *with_client_meta_info*' do
     client1 = Factory.create_client_from_file(PROPERTIES_URI, API_KEY_ID, SECRET_API_KEY)
     client2 = client1.with_client_meta_info(nil)
-    client_meta_info = Ingenico::Direct::SDK::DefaultImpl::DefaultMarshaller.INSTANCE.marshal({test: 'test'})
+    client_meta_info = OnlinePayments::SDK::DefaultImpl::DefaultMarshaller.INSTANCE.marshal({ test: 'test' })
     client3 = client1.with_client_meta_info(client_meta_info)
     client4 = client3.with_client_meta_info(client_meta_info)
     client5 = client3.with_client_meta_info(nil)
-
 
     expect(client1.instance_variable_get(:@client_headers)).to be_nil
     expect(client1).to be(client2)
@@ -28,7 +27,7 @@ describe 'Client' do
   end
 
   it 'should not close idle connections of an unpooled connection' do
-    conn = Connection.allocate  # Create fake (uninitialized) connection
+    conn = Connection.allocate # Create fake (uninitialized) connection
     communicator = Factory.create_communicator_from_file(PROPERTIES_URI, API_KEY_ID, SECRET_API_KEY, connection: conn)
     client = Factory.create_client_from_communicator(communicator)
 
@@ -38,7 +37,7 @@ describe 'Client' do
   end
 
   it 'should close idle connections of a pooled connection' do
-    conn = PooledConnection.allocate  # Create fake (uninitialized) connection
+    conn = PooledConnection.allocate # Create fake (uninitialized) connection
     communicator = Factory.create_communicator_from_file(PROPERTIES_URI, API_KEY_ID, SECRET_API_KEY, connection: conn)
     client = Factory.create_client_from_communicator(communicator)
 
@@ -48,7 +47,7 @@ describe 'Client' do
   end
 
   it 'should not close expired connections of an unpooled connection' do
-    conn = Connection.allocate  # Create fake (uninitialized) connection
+    conn = Connection.allocate # Create fake (uninitialized) connection
     communicator = Factory.create_communicator_from_file(PROPERTIES_URI, API_KEY_ID, SECRET_API_KEY, connection: conn)
     client = Factory.create_client_from_communicator(communicator)
 
@@ -58,7 +57,7 @@ describe 'Client' do
   end
 
   it 'should close expired connections of a pooled connection' do
-    conn = PooledConnection.allocate  # Create fake (uninitialized) connection
+    conn = PooledConnection.allocate # Create fake (uninitialized) connection
     communicator = Factory.create_communicator_from_file(PROPERTIES_URI, API_KEY_ID, SECRET_API_KEY, connection: conn)
     client = Factory.create_client_from_communicator(communicator)
 

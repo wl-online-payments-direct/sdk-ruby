@@ -1,9 +1,9 @@
 require 'rspec'
 require 'spec_helper'
-require 'ingenico/direct/sdk/merchant/products/get_payment_product_params'
-require 'ingenico/direct/sdk/merchant/productgroups/get_product_groups_params'
+require 'onlinepayments/sdk/merchant/products/get_payment_product_params'
+require 'onlinepayments/sdk/merchant/productgroups/get_product_groups_params'
 
-RequestParam ||= Ingenico::Direct::SDK::RequestParam
+RequestParam ||= OnlinePayments::SDK::RequestParam
 
 shared_examples_for 'GetParams' do
 
@@ -43,17 +43,17 @@ shared_examples_for 'GetParams' do
   end
 end
 
-GetPaymentProductParams ||= Ingenico::Direct::SDK::Merchant::Products::GetPaymentProductParams
-GetProductGroupParams ||= Ingenico::Direct::SDK::Merchant::ProductGroups::GetProductGroupsParams
+GetPaymentProductParams ||= OnlinePayments::SDK::Merchant::Products::GetPaymentProductParams
+GetProductGroupParams ||= OnlinePayments::SDK::Merchant::ProductGroups::GetProductGroupsParams
 
 describe GetPaymentProductParams do
-  let(:params){GetPaymentProductParams.new}
+  let(:params) { GetPaymentProductParams.new }
 
   it_behaves_like 'GetParams'
 end
 
 describe GetProductGroupParams do
-  let(:params){GetProductGroupParams.new}
+  let(:params) { GetProductGroupParams.new }
 
   it_behaves_like 'GetParams'
 end

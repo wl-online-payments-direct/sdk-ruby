@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'English'
 
-StdoutCommunicatorLogger ||= Ingenico::Direct::SDK::Logging::StdoutCommunicatorLogger
+StdoutCommunicatorLogger ||= OnlinePayments::SDK::Logging::StdoutCommunicatorLogger
 
 describe StdoutCommunicatorLogger do
   before do
@@ -31,11 +31,11 @@ describe StdoutCommunicatorLogger do
       sample.log(msg)
 
       expect(
-          $stdout.string
+        $stdout.string
       ).to match(regex)
 
       expect(
-          regex.match($stdout.string)[1] # first capture
+        regex.match($stdout.string)[1] # first capture
       ).to eq(expected_msg(msg))
     end
 
@@ -52,11 +52,11 @@ describe StdoutCommunicatorLogger do
       end
 
       expect(
-          $stdout.string
+        $stdout.string
       ).to match(regex)
 
       expect(
-          regex.match($stdout.string)[1] # first capture
+        regex.match($stdout.string)[1] # first capture
       ).to eq(expected_msg(msg, exception))
 
     end

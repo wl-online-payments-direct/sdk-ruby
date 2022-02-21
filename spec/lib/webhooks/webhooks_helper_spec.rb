@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-include Ingenico::Direct::SDK
+include OnlinePayments::SDK
 describe Webhooks::WebhooksHelper do
 
   # define constants for the testbench
@@ -42,22 +42,22 @@ describe Webhooks::WebhooksHelper do
         event
       end
       Webhooks::InMemorySecretKeyStore.instance.store_secret_key(KEY_ID, SECRET_KEY)
-      expect{helper.unmarshal(body, request_headers)}.to raise_error(Webhooks::ApiVersionMismatchException)
+      expect { helper.unmarshal(body, request_headers) }.to raise_error(Webhooks::ApiVersionMismatchException)
     end
 
     it 'should raise SecretKeyNotAvailableException when no secret key exists' do
-      expect{helper.unmarshal(body, request_headers)}.to raise_error(Webhooks::SecretKeyNotAvailableException)
+      expect { helper.unmarshal(body, request_headers) }.to raise_error(Webhooks::SecretKeyNotAvailableException)
     end
 
     it 'should raise SignatureValidationException when the signature is missing' do
       Webhooks::InMemorySecretKeyStore.instance.store_secret_key(KEY_ID, SECRET_KEY)
-      expect{helper.unmarshal(body, [])}.to raise_error(Webhooks::SignatureValidationException)
+      expect { helper.unmarshal(body, []) }.to raise_error(Webhooks::SignatureValidationException)
     end
 
     it 'should raise SignatureValidationException when there are duplicate headers' do
       Webhooks::InMemorySecretKeyStore.instance.store_secret_key(KEY_ID, SECRET_KEY)
       request_headers = [sig_header, key_header, sig_header]
-      expect{helper.unmarshal(body, request_headers)}.to raise_error(Webhooks::SignatureValidationException)
+      expect { helper.unmarshal(body, request_headers) }.to raise_error(Webhooks::SignatureValidationException)
     end
 
     it 'should work when everything is correct' do
@@ -98,18 +98,18 @@ describe Webhooks::WebhooksHelper do
     it 'should raise SignatureValidationException when the body is invalid' do
       Webhooks::InMemorySecretKeyStore.instance.store_secret_key(KEY_ID, SECRET_KEY)
       body = read_resource('invalid-body')
-      expect{helper.unmarshal(body, request_headers)}.to raise_error(Webhooks::SignatureValidationException)
+      expect { helper.unmarshal(body, request_headers) }.to raise_error(Webhooks::SignatureValidationException)
     end
 
     it 'should raise SignatureValidationException when the secret key is invalid' do
-      Webhooks::InMemorySecretKeyStore.instance.store_secret_key(KEY_ID, '1'+SECRET_KEY) # wrong key
-      expect{helper.unmarshal(body, request_headers)}.to raise_error(Webhooks::SignatureValidationException)
+      Webhooks::InMemorySecretKeyStore.instance.store_secret_key(KEY_ID, '1' + SECRET_KEY) # wrong key
+      expect { helper.unmarshal(body, request_headers) }.to raise_error(Webhooks::SignatureValidationException)
     end
 
     it 'should raise SignatureValidationException when the signature is invalid' do
       Webhooks::InMemorySecretKeyStore.instance.store_secret_key(KEY_ID, SECRET_KEY)
-      request_headers = [RequestHeader.new(SIGNATURE_HEADER, '1'+SIGNATURE), key_header] # wrong signature
-      expect{helper.unmarshal(body, request_headers)}.to raise_error(Webhooks::SignatureValidationException)
+      request_headers = [RequestHeader.new(SIGNATURE_HEADER, '1' + SIGNATURE), key_header] # wrong signature
+      expect { helper.unmarshal(body, request_headers) }.to raise_error(Webhooks::SignatureValidationException)
     end
   end
 end

@@ -1,17 +1,17 @@
 require 'spec_helper'
 require 'integration_setup'
 require 'webmock/rspec'
-require 'ingenico/direct/sdk/merchant/products/get_payment_products_params'
-require 'ingenico/direct/sdk/merchant/products/get_payment_product_params'
+require 'onlinepayments/sdk/merchant/products/get_payment_products_params'
+require 'onlinepayments/sdk/merchant/products/get_payment_product_params'
 
 describe 'PaymentProducts' do
 
-  before(:context){WebMock.allow_net_connect!}
-  after(:context){WebMock.disable_net_connect!}
+  before(:context) { WebMock.allow_net_connect! }
+  after(:context) { WebMock.disable_net_connect! }
 
   it 'can be accessed' do
 
-    params = Ingenico::Direct::SDK::Merchant::Products::GetPaymentProductsParams.new
+    params = OnlinePayments::SDK::Merchant::Products::GetPaymentProductsParams.new
     params.country_code = 'NL'
     params.currency_code = 'EUR'
 
@@ -23,7 +23,7 @@ describe 'PaymentProducts' do
 
   it 'has directories that can be accessed' do
 
-    params = Ingenico::Direct::SDK::Merchant::Products::GetPaymentProductParams.new
+    params = OnlinePayments::SDK::Merchant::Products::GetPaymentProductParams.new
     params.country_code = 'NL'
     params.currency_code = 'EUR'
 

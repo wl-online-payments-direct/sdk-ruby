@@ -1,6 +1,6 @@
-require 'ingenico/direct/sdk/request_param'
+require 'onlinepayments/sdk/request_param'
 
-module Ingenico::Direct::SDK
+module OnlinePayments::SDK
 
   # extension of the RequestParam object to support comparison
   class RequestParam

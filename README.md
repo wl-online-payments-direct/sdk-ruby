@@ -1,8 +1,8 @@
-# Ingenico Direct Ruby SDK
+# Online Payments Ruby SDK
 
 ## Introduction
 
-The Ruby SDK helps you to communicate with the [Ingenico Direct](https://support.direct.ingenico.com/) Server API. Its primary features are:
+The Ruby SDK helps you to communicate with the payment platform server API. Its primary features are:
 
 * convenient Ruby library for the API calls and responses
     * marshalls Ruby request objects to HTTP requests
@@ -12,13 +12,11 @@ The Ruby SDK helps you to communicate with the [Ingenico Direct](https://support
 
 Its use is demonstrated by an example for each possible call. The examples execute a call using the provided API keys. 
 
-See the [Ingenico Direct Developer Hub](https://support.direct.ingenico.com/documentation/sdk/server/ruby/) for more information on how to use the SDK.
-
 ## Structure of this repository
 
 This repository consists out of three main components:
 
-1. The source code of the SDK itself: `/lib/ingenico/direct/sdk/`
+1. The source code of the SDK itself: `/lib/onlinepayments/sdk/`
 2. The source code of the SDK unit tests: `/spec/lib/`
 3. The source code of the SDK integration tests: `/spec/integration/`
 
@@ -39,26 +37,27 @@ In addition, the following packages are required:
 
 To install the SDK using `gem`, execute the following command:
 
-    gem install direct-sdk-ruby
+    gem install onlinepayments-sdk-ruby
 
 ### Using a pre-built gem
 
-1. Download the latest version of the Ruby SDK from GitHub. Choose the `direct-sdk-ruby-x.y.z.gem` file from the [releases](https://github.com/Ingenico/direct-sdk-ruby/releases) page, where `x.y.z` is the version number.
+1. Download the latest version of the Ruby SDK from GitHub. Choose the `onlinepayments-sdk-ruby-x.y.z.gem` file from the [releases](https://github.com/wl-online-payments-direct/sdk-ruby/releases) page, where `x.y.z` is the version number.
 2. Navigate into the folder where the gem file is downloaded to, and execute the following command:
 
     ```
-    gem install direct-sdk-ruby-x.y.z.gem
+    gem install onlinepayments-sdk-ruby-x.y.z.gem
     ```
 3. Feel free to delete the gem file at this point, it is no longer required.
 
 ### From source
 
-1. Download the latest version of the Ruby SDK from GitHub. Choose the `direct-sdk-ruby-x.y.z.zip` file from the [releases](https://github.com/Ingenico/direct-sdk-ruby/releases) page, where `x.y.z` is the version number.
+1. Download the latest version of the Ruby SDK from GitHub. Choose the `onlinepayments-sdk-ruby-x.y.z.zip` file from the [releases](https://github.com/wl-online-payments-direct/sdk-ruby/releases) page, where `x.y.z` is the version number.
+1. Download the latest version of the Ruby SDK from GitHub. Choose the `onlinepayments-sdk-ruby-x.y.z.zip` file from the releases page of the Github repository, where `x.y.z` is the version number.
 2. Unzip the file, navigate into the folder where the file is unzipped to, and execute the following commands:
 
     ```
-    gem build direct-sdk-ruby.gemspec
-    gem install direct-sdk-ruby-x.y.z.gem
+    gem build onlinepayments-sdk-ruby.gemspec
+    gem install onlinepayments-sdk-ruby-x.y.z.gem
     ```
 3. Feel free to delete the unzipped archive, the zip file, and the gem file at this point; they are no longer required.
 
@@ -67,7 +66,7 @@ To install the SDK using `gem`, execute the following command:
 After the Ruby SDK has been installed, it can be uninstalled using the
 following command:
 
-    gem uninstall direct-sdk-ruby
+    gem uninstall onlinepayments-sdk-ruby
 
 The required packages can be uninstalled in the same way.
 
@@ -75,16 +74,16 @@ The required packages can be uninstalled in the same way.
 
 After the Ruby SDK has been installed, it can be required in Ruby program as follows:
 
-    require 'ingenico/direct/sdk'
+    require 'onlinepayments/sdk'
 
 ## Running tests
 
 There are two types of tests: unit tests and integration tests. The unit tests will work out-of-the-box; for the integration tests some configuration is required.
 First, some environment variables need to be set:
 
-* `direct_api_apiKeyId` for the API key id to use. This can be retrieved from the Configuration Center.
-* `direct_api_secretApiKey` for the secret API key to use. This can be retrieved from the Configuration Center.
-* `direct_api_merchantId` for your merchant ID.
+* `onlinePayments_api_apiKeyId` for the API key id to use. This can be retrieved from the Configuration Center.
+* `onlinePayments_api_secretApiKey` for the secret API key to use. This can be retrieved from the Configuration Center.
+* `onlinePayments_api_merchantId` for your merchant ID.
 
 In addition, to run the proxy integration tests, the proxy URI, username and password should be set in the `spec/fixtures/resources/properties.proxy.yml` file.
 

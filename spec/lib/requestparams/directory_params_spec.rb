@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'ingenico/direct/sdk/merchant/products/get_product_directory_params'
+require 'onlinepayments/sdk/merchant/products/get_product_directory_params'
 
 describe 'DirectoryParams' do
-  subject(:params){Ingenico::Direct::SDK::Merchant::Products::GetProductDirectoryParams.new}
+  subject(:params) { OnlinePayments::SDK::Merchant::Products::GetProductDirectoryParams.new }
 
   it 'should output an empty list when no parameters are present' do
     expect(params.to_request_parameters).to eq([])
@@ -11,7 +11,7 @@ describe 'DirectoryParams' do
   it 'accepts parameters' do
     params.country_code = 'NL'
     params.currency_code = 'EUR'
-    expected = [Ingenico::Direct::SDK::RequestParam.new('countryCode', 'NL'), Ingenico::Direct::SDK::RequestParam.new('currencyCode', 'EUR')]
+    expected = [OnlinePayments::SDK::RequestParam.new('countryCode', 'NL'), OnlinePayments::SDK::RequestParam.new('currencyCode', 'EUR')]
 
     expect(params.to_request_parameters).to include(expected)
   end

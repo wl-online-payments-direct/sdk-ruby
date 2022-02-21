@@ -2,16 +2,16 @@ require 'spec_helper'
 require 'yaml'
 require 'integration_setup'
 require 'webmock/rspec'
-require 'ingenico/direct/sdk/merchant/productgroups/get_product_groups_params'
+require 'onlinepayments/sdk/merchant/productgroups/get_product_groups_params'
 
 describe 'PaymentProductGroups' do
 
-  before(:context){WebMock.allow_net_connect!}
-  after(:context){WebMock.disable_net_connect!}
+  before(:context) { WebMock.allow_net_connect! }
+  after(:context) { WebMock.disable_net_connect! }
 
   it 'can be accessed' do
 
-    params = Ingenico::Direct::SDK::Merchant::ProductGroups::GetProductGroupsParams.new
+    params = OnlinePayments::SDK::Merchant::ProductGroups::GetProductGroupsParams.new
     params.country_code = 'NL'
     params.currency_code = 'EUR'
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-LoggingUtil = Ingenico::Direct::SDK::Logging::LoggingUtil
+LoggingUtil = OnlinePayments::SDK::Logging::LoggingUtil
 
 def test_obfuscate_body_with_matches(original_resource, obfuscated_resource)
   prefix = 'spec/fixtures/resources/logging/'
@@ -80,8 +80,8 @@ describe LoggingUtil do
 
     it 'works with body containing GDPR data' do
       expect(
-          test_obfuscate_body_with_matches("bodyWithGDPRDataOriginal.json",
-                                           "bodyWithGDPRDataObfuscated.json")
+        test_obfuscate_body_with_matches("bodyWithGDPRDataOriginal.json",
+                                         "bodyWithGDPRDataObfuscated.json")
       ).to be(true)
     end
   end
@@ -128,7 +128,7 @@ describe LoggingUtil do
 
       expect(
         test_obfuscate_header_with_match("x-gcs-callerpassword", "foobar",
-                                     "***")
+                                         "***")
       ).to be(true)
 
       expect(

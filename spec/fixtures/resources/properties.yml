@@ -1,7 +1,7 @@
 --- # YAML settings used in testing the SDK
-  direct.api.endpoint.host: payment.preprod.direct.ingenico.com
-  direct.api.authorizationType: v1HMAC
-  direct.api.connectTimeout: -1
-  direct.api.socketTimeout: -1
-  direct.api.maxConnections: 100
-  direct.api.integrator: Ingenico
+onlinePayments.api.endpoint.host: payment.preprod.online-payments.com
+onlinePayments.api.authorizationType: v1HMAC
+onlinePayments.api.connectTimeout: -1
+onlinePayments.api.socketTimeout: -1
+onlinePayments.api.maxConnections: 100
+onlinePayments.api.integrator: OnlinePayments

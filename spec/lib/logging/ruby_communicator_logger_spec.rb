@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'logger'
 require 'English'
 
-ResponseLogMessageBuilder ||= Ingenico::Direct::SDK::Logging::ResponseLogMessageBuilder
-RubyCommunicatorLogger ||= Ingenico::Direct::SDK::Logging::RubyCommunicatorLogger
+ResponseLogMessageBuilder ||= OnlinePayments::SDK::Logging::ResponseLogMessageBuilder
+RubyCommunicatorLogger ||= OnlinePayments::SDK::Logging::RubyCommunicatorLogger
 
 describe RubyCommunicatorLogger do
 
@@ -45,7 +45,7 @@ describe RubyCommunicatorLogger do
 
         expect(line).to match(regex)
         expect(
-            line.match(regex)[1] # first capture
+          line.match(regex)[1] # first capture
         ).to eq(expected_msg(msg))
       end
     end
@@ -60,7 +60,7 @@ describe RubyCommunicatorLogger do
 
         expect(line).to match(regex)
         expect(
-            line.match(regex)[1] # idem
+          line.match(regex)[1] # idem
         ).to eq(expected_msg(msg))
       end
     end

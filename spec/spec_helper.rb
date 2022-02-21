@@ -1,7 +1,7 @@
 require 'rspec'
 require 'webmock/rspec'
 
-require 'ingenico/direct/sdk'
+require 'onlinepayments/sdk'
 require 'comparable_extension'
 
 RSpec.configure do |config|
@@ -16,7 +16,7 @@ RSpec.configure do |config|
     PROPERTIES_URI = File.expand_path('../../spec/fixtures/resources/properties.yml', __FILE__)
     API_KEY_ID = 'somekey'
     SECRET_API_KEY = 'someSecret'
-    CLIENT = Ingenico::Direct::SDK::Factory.create_client_from_file(PROPERTIES_URI, API_KEY_ID, SECRET_API_KEY)
+    CLIENT = OnlinePayments::SDK::Factory.create_client_from_file(PROPERTIES_URI, API_KEY_ID, SECRET_API_KEY)
   end
 
   config.after(:suite) { CLIENT.close }
