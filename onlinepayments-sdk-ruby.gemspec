@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name           = 'onlinepayments-sdk-ruby'
-  spec.version        = '4.23.0'
+  spec.version        = '5.0.0'
   spec.authors        = ['Worldline Direct support team']
   spec.email          = ['82139942+worldline-direct-support-team@users.noreply.github.com']
   spec.summary        = %q{SDK to communicate with the Online Payments platform using the Online Payments Server API}
@@ -22,7 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard', '~> 0.9'
   spec.add_development_dependency 'rspec', '~> 3.5'
   spec.add_development_dependency 'webmock', '~> 2.1'
-  spec.add_development_dependency 'sinatra', '~> 1.4'
+  spec.add_development_dependency 'sinatra', '~> 2.1'
+  spec.add_development_dependency 'webrick', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 12.3', '>= 12.3.3'
   # spec.metadata['yard.run'] = 'yri'  # compiles yard doc on install
 end

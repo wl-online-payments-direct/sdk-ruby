@@ -8,7 +8,7 @@ The Ruby SDK helps you to communicate with the payment platform server API. Its 
     * marshalls Ruby request objects to HTTP requests
     * unmarshalls HTTP responses to Ruby response objects or Ruby exceptions
 * handling of all the details concerning authentication
-* handling of required meta data
+* handling of required metadata
 
 Its use is demonstrated by an example for each possible call. The examples execute a call using the provided API keys. 
 
@@ -80,11 +80,9 @@ After the Ruby SDK has been installed, it can be required in Ruby program as fol
 
 There are two types of tests: unit tests and integration tests. The unit tests will work out-of-the-box; for the integration tests some configuration is required.
 First, some environment variables need to be set:
-
-* `onlinePayments_api_apiKeyId` for the API key id to use. This can be retrieved from the Configuration Center.
-* `onlinePayments_api_secretApiKey` for the secret API key to use. This can be retrieved from the Configuration Center.
+* `onlinePayments_api_v1hmac_apiKeyId` for the API key id to use. This can be retrieved from the Configuration Center.
+* `onlinePayments_api_v1hmac_secretApiKey` for the secret API key to use. This can be retrieved from the Configuration Center.
 * `onlinePayments_api_merchantId` for your merchant ID.
-
 In addition, to run the proxy integration tests, the proxy URI, username and password should be set in the `spec/fixtures/resources/properties.proxy.yml` file.
 
 In order to run the unit and integration tests, some additional dependencies are required:
@@ -92,7 +90,8 @@ In order to run the unit and integration tests, some additional dependencies are
 * [rake](https://ruby.github.io/rake/) 12.3.3 or higher
 * [rspec](https://github.com/rspec/rspec) 3.5 or higher
 * [webmock](https://github.com/bblimke/webmock) 2.1 or higher
-* [sinatra](https://github.com/sinatra/sinatra) 1.4 or higher
+* [sinatra](https://github.com/sinatra/sinatra) 2.1 or higher
+* [webrick](https://github.com/ruby/webrick) 1.7 or higher
 
 They can be installed using the following command:
 
