@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name           = 'onlinepayments-sdk-ruby'
-  spec.version        = '6.3.0'
+  spec.version        = '6.3.1'
   spec.authors        = ['Worldline Direct support team']
   spec.email          = ['82139942+worldline-direct-support-team@users.noreply.github.com']
   spec.summary        = %q{SDK to communicate with the Online Payments platform using the Online Payments Server API}
