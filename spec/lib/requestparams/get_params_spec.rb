@@ -14,19 +14,19 @@ shared_examples_for 'GetParams' do
   it 'accepts parameters' do
     expected = []
     params.amount = 1000
-    expected << OnlinePayments::SDK::Communication::RequestParam.new('amount', '1000')
+    expected << RequestParam.new('amount', '1000')
     params.country_code = 'NL'
-    expected << OnlinePayments::SDK::Communication::RequestParam.new('countryCode', 'NL')
+    expected << RequestParam.new('countryCode', 'NL')
     params.currency_code = 'EUR'
-    expected << OnlinePayments::SDK::Communication::RequestParam.new('currencyCode', 'EUR')
+    expected << RequestParam.new('currencyCode', 'EUR')
     params.is_recurring = true
-    expected << OnlinePayments::SDK::Communication::RequestParam.new('isRecurring', 'true')
+    expected << RequestParam.new('isRecurring', 'true')
     params.locale = 'nl_NL'
-    expected << OnlinePayments::SDK::Communication::RequestParam.new('locale', 'nl_NL')
+    expected << RequestParam.new('locale', 'nl_NL')
     params.add_hide('fields')
-    expected << OnlinePayments::SDK::Communication::RequestParam.new('hide', 'fields')
+    expected << RequestParam.new('hide', 'fields')
     params.add_hide('accounts_on_file')
-    expected << OnlinePayments::SDK::Communication::RequestParam.new('hide', 'accounts_on_file')
+    expected << RequestParam.new('hide', 'accounts_on_file')
 
     expect(params.to_request_parameters).to match_array(expected)
   end
