@@ -18,7 +18,7 @@ module OnlinePayments
           # @return [Array<OnlinePayments::SDK::Communication::RequestParam>] representing the attributes of this class
           def to_request_parameters
             result = []
-            result << RequestParam.new('operationGroupReference', @operation_group_reference) unless @operation_group_reference.nil?
+            result << OnlinePayments::SDK::Communication::RequestParam.new('operationGroupReference', @operation_group_reference) unless @operation_group_reference.nil?
             result
           end
         end
