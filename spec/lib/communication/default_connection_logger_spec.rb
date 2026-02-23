@@ -239,9 +239,9 @@ describe 'DefaultConnectionLogging' do
                    headers: base_headers.merge({'Content-Type' => 'application/json'}))
 
     query_params = TestParamRequest.new([
-                                          RequestParam.new('source', 'EUR'),
-                                          RequestParam.new('target', 'USD'),
-                                          RequestParam.new('amount', '1000'),
+                                          OnlinePayments::SDK::Communication::RequestParam.new('source', 'EUR'),
+                                          OnlinePayments::SDK::Communication::RequestParam.new('target', 'USD'),
+                                          OnlinePayments::SDK::Communication::RequestParam.new('amount', '1000'),
                                         ])
     COMMUNICATOR.enable_logging(logger)
 
