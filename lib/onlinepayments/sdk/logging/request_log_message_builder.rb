@@ -36,13 +36,12 @@ module OnlinePayments
         private
 
         def format_uri
-          '' unless @uri && @uri.path
+          return '' unless @uri && @uri.path
           if @uri.query.nil?
             @uri.path
           else
-            "#{@uri.path}?#{@uri.query}" unless @uri.query.nil?
+            "#{@uri.path}?#{@uri.query}"
           end
-          # @uri.path + '?' + empty_if_null(@uri.query)
         end
       end
     end
