@@ -239,17 +239,14 @@ RSpec.describe 'Payments' do
 
     context 'after capture' do
 
-      it 'returns Payment with status unsuccessful' do
+      it 'raises ValidationException' do
         payment_id = @sdk_helper.create_payment_and_get_id
 
         @payments.capture_payment(payment_id, Integration::Util::Payments::CapturePaymentRequestBuilder.new.build)
 
-        cancel_payment_response = @payments.cancel_payment(payment_id, Integration::Util::Payments::CancelPaymentRequestBuilder.new.build)
-
-        expect(cancel_payment_response).not_to be_nil
-        expect(cancel_payment_response.payment).not_to be_nil
-        expect(cancel_payment_response.payment.status_output).not_to be_nil
-        expect(cancel_payment_response.payment.status_output.status_category).to eq("UNSUCCESSFUL")
+        expect {
+          @payments.cancel_payment(payment_id, Integration::Util::Payments::CancelPaymentRequestBuilder.new.build)
+        }.to raise_error(OnlinePayments::SDK::ValidationException)
       end
 
       it 'raises ValidationException when partial amount exceeds remaining uncaptured amount' do
@@ -274,18 +271,15 @@ RSpec.describe 'Payments' do
 
     context 'after refund' do
 
-      it 'returns Payment with status unsuccessful' do
+      it 'raises ValidationException' do
         payment_id = @sdk_helper.create_payment_and_get_id
 
         @payments.capture_payment(payment_id, Integration::Util::Payments::CapturePaymentRequestBuilder.new.build)
         @payments.refund_payment(payment_id, Integration::Util::Payments::RefundRequestBuilder.new.build)
 
-        cancel_payment_response = @payments.cancel_payment(payment_id, Integration::Util::Payments::CancelPaymentRequestBuilder.new.build)
-
-        expect(cancel_payment_response).not_to be_nil
-        expect(cancel_payment_response.payment).not_to be_nil
-        expect(cancel_payment_response.payment.status_output).not_to be_nil
-        expect(cancel_payment_response.payment.status_output.status_category).to eq("UNSUCCESSFUL")
+        expect {
+          @payments.cancel_payment(payment_id, Integration::Util::Payments::CancelPaymentRequestBuilder.new.build)
+        }.to raise_error(OnlinePayments::SDK::ValidationException)
       end
     end
 
