@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name           = 'onlinepayments-sdk-ruby'
-  spec.version        = '11.0.0'
+  spec.version        = '11.1.0'
   spec.authors        = ['Worldline Direct support team']
   spec.email          = ['82139942+worldline-direct-support-team@users.noreply.github.com']
   spec.summary        = %q{SDK to communicate with the Online Payments platform using the Online Payments Server API}
@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.license        = 'MIT'
 
   # exclude hidden files like .gitignore
-  spec.files          = Dir['lib/**/*'] + %w[onlinepayments-sdk-ruby.gemspec Gemfile LICENSE.txt Rakefile README.md]
+  spec.files          = Dir['lib/**/*'] + Dir['skills/**/*'] + %w[onlinepayments-sdk-ruby.gemspec Gemfile LICENSE.txt Rakefile README.md AGENTS.md]
   spec.executables    = spec.files.grep(%r{^bin\/}) { |f| File.basename(f) }
   spec.test_files     = spec.files.grep(%r{^(test|spec|features)\/})
   spec.require_paths  = ['lib']

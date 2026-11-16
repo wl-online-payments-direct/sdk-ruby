@@ -61,6 +61,28 @@ To install the SDK using `gem`, execute the following command:
     ```
 3. Feel free to delete the unzipped archive, the zip file, and the gem file at this point; they are no longer required.
 
+## Working with AI agents
+
+The SDK comes with an agent skill for AI coding agents such as Claude Code, Codex, GitHub Copilot and Cursor. It tells the agent how to choose an integration method, which steps each flow needs, which rules every integration must follow, and gives code examples that are type-checked against this SDK version.
+
+The skill for this version is available:
+
+* online, as plain Markdown for agents: https://raw.githubusercontent.com/wl-online-payments-direct/sdk-ruby/11.1.0/skills/worldline-direct/SKILL.md
+* online, on GitHub: https://github.com/wl-online-payments-direct/sdk-ruby/blob/11.1.0/skills/worldline-direct/SKILL.md
+* in the installed gem: `skills/worldline-direct/` in the gem folder, e.g. `vendor/bundle/ruby/<ruby version>/gems/onlinepayments-sdk-ruby-<version>/skills/worldline-direct/` when Bundler installs into `vendor/bundle`. `bundle info onlinepayments-sdk-ruby --path` prints the gem folder; without Bundler, `gem contents onlinepayments-sdk-ruby | grep SKILL.md` prints the path of the skill.
+* in this repository: `skills/worldline-direct/`
+
+To make your agent use it, add this to the `AGENTS.md` or `CLAUDE.md` file of your project:
+
+```
+For the Worldline Direct integration (onlinepayments-sdk-ruby), read and follow the agent skill
+skills/worldline-direct/SKILL.md in the folder of the installed onlinepayments-sdk-ruby gem (bundle info onlinepayments-sdk-ruby --path)
+(online: https://raw.githubusercontent.com/wl-online-payments-direct/sdk-ruby/11.1.0/skills/worldline-direct/SKILL.md)
+Use the code shown in the skill; do not write SDK calls from memory.
+```
+
+Agents that support the Agent Skills format can also load the folder directly, for example by copying `skills/worldline-direct/` from the gem folder to `.claude/skills/worldline-direct/` in your project for Claude Code.
+
 ## Uninstalling
 
 After the Ruby SDK has been installed, it can be uninstalled using the
