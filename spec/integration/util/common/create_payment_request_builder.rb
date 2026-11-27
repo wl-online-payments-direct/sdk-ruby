@@ -1,4 +1,4 @@
-﻿require 'securerandom'
+require 'securerandom'
 require 'onlinepayments/sdk/domain/address'
 require 'onlinepayments/sdk/domain/auto_capture'
 require 'onlinepayments/sdk/domain/amount_of_money'

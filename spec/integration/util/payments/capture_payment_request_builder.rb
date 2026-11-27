@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/capture_payment_request'
+require 'onlinepayments/sdk/domain/capture_payment_request'
 
 module Integration
   module Util

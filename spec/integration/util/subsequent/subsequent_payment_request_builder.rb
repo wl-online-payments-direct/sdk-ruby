@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/subsequent_payment_request'
+require 'onlinepayments/sdk/domain/subsequent_payment_request'
 require 'onlinepayments/sdk/domain/subsequent_card_payment_method_specific_input'
 require 'onlinepayments/sdk/domain/order'
 require 'onlinepayments/sdk/domain/amount_of_money'

@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/declined_payment_exception'
 
 DeclinedPaymentException         ||= OnlinePayments::SDK::DeclinedPaymentException

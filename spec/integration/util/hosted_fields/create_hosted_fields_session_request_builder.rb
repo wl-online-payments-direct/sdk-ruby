@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/create_hosted_fields_session_request'
+require 'onlinepayments/sdk/domain/create_hosted_fields_session_request'
 
 module Integration
   module Util

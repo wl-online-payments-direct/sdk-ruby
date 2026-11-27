@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/webhooks/secret_key_not_available_exception'
 
 SecretKeyNotAvailableException ||= OnlinePayments::SDK::Webhooks::SecretKeyNotAvailableException

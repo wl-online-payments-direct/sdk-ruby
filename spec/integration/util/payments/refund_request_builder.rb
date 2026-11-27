@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/amount_of_money'
+require 'onlinepayments/sdk/domain/amount_of_money'
 require 'onlinepayments/sdk/domain/refund_request'
 
 module Integration

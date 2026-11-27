@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/currency_conversion_request'
+require 'onlinepayments/sdk/domain/currency_conversion_request'
 require 'onlinepayments/sdk/domain/dcc_card_source'
 require 'onlinepayments/sdk/domain/card_info'
 require 'onlinepayments/sdk/domain/transaction'

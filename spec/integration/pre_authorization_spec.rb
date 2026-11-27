@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'integration_setup'
 require 'securerandom'
 require 'webmock/rspec'
@@ -51,8 +51,8 @@ RSpec.describe 'PreAuthorization' do
           PRE_AUTHORIZATION_CURRENCY_CODE
         )
         request = Integration::Util::PreAuthorization::IncrementAuthorizationRequestBuilder.new
-                                                                                          .with_amount(PRE_AUTHORIZATION_INCREMENTED_AMOUNT)
-                                                                                          .build
+                                                                                           .with_amount(PRE_AUTHORIZATION_INCREMENTED_AMOUNT)
+                                                                                           .build
 
         response = @pre_authorization.increment_authorization(payment_id, request)
 
@@ -76,8 +76,8 @@ RSpec.describe 'PreAuthorization' do
           PRE_AUTHORIZATION_CURRENCY_CODE
         )
         request = Integration::Util::PreAuthorization::IncrementAuthorizationRequestBuilder.new
-                                                                                          .with_amount(PRE_AUTHORIZATION_INCREMENTED_AMOUNT)
-                                                                                          .build
+                                                                                           .with_amount(PRE_AUTHORIZATION_INCREMENTED_AMOUNT)
+                                                                                           .build
         call_context = OnlinePayments::SDK::CallContext.new("test-increment-authorization-#{SecureRandom.uuid}")
 
         response = @pre_authorization.increment_authorization(payment_id, request, call_context)
@@ -188,8 +188,8 @@ RSpec.describe 'PreAuthorization' do
           PRE_AUTHORIZATION_CURRENCY_CODE
         )
         request = Integration::Util::PreAuthorization::IncrementAuthorizationRequestBuilder.new
-                                                                                          .with_amount(0)
-                                                                                          .build
+                                                                                           .with_amount(0)
+                                                                                           .build
 
         expect { @pre_authorization.increment_authorization(payment_id, request) }.to raise_error(OnlinePayments::SDK::ValidationException)
       end
@@ -203,8 +203,8 @@ RSpec.describe 'PreAuthorization' do
           PRE_AUTHORIZATION_CURRENCY_CODE
         )
         request = Integration::Util::PreAuthorization::IncrementAuthorizationRequestBuilder.new
-                                                                                          .with_currency('USD')
-                                                                                          .build
+                                                                                           .with_currency('USD')
+                                                                                           .build
 
         expect { @pre_authorization.increment_authorization(payment_id, request) }.to raise_error(OnlinePayments::SDK::ValidationException)
       end
@@ -280,8 +280,8 @@ RSpec.describe 'PreAuthorization' do
       it 'returns payment when minimal car rental data is provided' do
         payment_id = @sdk_helper.create_pre_authorized_payment_and_get_id(PRE_AUTHORIZATION_PAYMENT_AMOUNT, PRE_AUTHORIZATION_CURRENCY_CODE)
         request = Integration::Util::PreAuthorization::UpdateAuthorizationAdditionalDataRequestBuilder.new
-                                                                                                     .with_minimal_car_rental_data
-                                                                                                     .build
+                                                                                                      .with_minimal_car_rental_data
+                                                                                                      .build
 
         response = @pre_authorization.add_authorization_details(payment_id, request)
 
@@ -354,8 +354,8 @@ RSpec.describe 'PreAuthorization' do
       it 'raises ValidationException' do
         payment_id = @sdk_helper.create_pre_authorized_payment_and_get_id(PRE_AUTHORIZATION_PAYMENT_AMOUNT, PRE_AUTHORIZATION_CURRENCY_CODE)
         request = Integration::Util::PreAuthorization::UpdateAuthorizationAdditionalDataRequestBuilder.new
-                                                                                                     .with_charges_category('invalid')
-                                                                                                     .build
+                                                                                                      .with_charges_category('invalid')
+                                                                                                      .build
 
         expect { @pre_authorization.add_authorization_details(payment_id, request) }.to raise_error(OnlinePayments::SDK::ValidationException)
       end

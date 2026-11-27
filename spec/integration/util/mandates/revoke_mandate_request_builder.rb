@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/revoke_mandate_request'
+require 'onlinepayments/sdk/domain/revoke_mandate_request'
 
 module Integration
   module Util

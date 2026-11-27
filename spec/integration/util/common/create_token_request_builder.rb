@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/card'
+require 'onlinepayments/sdk/domain/card'
 require 'onlinepayments/sdk/domain/create_token_request'
 require 'onlinepayments/sdk/domain/token_card_specific_input'
 require 'onlinepayments/sdk/domain/token_data'

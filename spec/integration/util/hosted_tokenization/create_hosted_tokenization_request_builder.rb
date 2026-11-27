@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/create_hosted_tokenization_request'
+require 'onlinepayments/sdk/domain/create_hosted_tokenization_request'
 
 module Integration
   module Util

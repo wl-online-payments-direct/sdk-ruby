@@ -1,4 +1,4 @@
-﻿require 'securerandom'
+require 'securerandom'
 require 'onlinepayments/sdk/domain/batch_metadata'
 require 'onlinepayments/sdk/domain/submit_batch_request_body'
 

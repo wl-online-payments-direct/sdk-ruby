@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/declined_transaction_exception'
 require 'onlinepayments/sdk/domain/api_error'
 

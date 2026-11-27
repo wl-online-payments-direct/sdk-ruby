@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/authorization_exception'
 
 AuthorizationException ||= OnlinePayments::SDK::AuthorizationException

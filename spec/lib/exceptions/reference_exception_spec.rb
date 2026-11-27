@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/reference_exception'
 
 ReferenceException ||= OnlinePayments::SDK::ReferenceException

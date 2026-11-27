@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/merchant/productgroups/get_product_group_params'
+require 'onlinepayments/sdk/merchant/productgroups/get_product_group_params'
 
 module Integration
   module Util

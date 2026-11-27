@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/domain/shopping_cart_extension'
 
 ShoppingCartExtension ||= OnlinePayments::SDK::Domain::ShoppingCartExtension

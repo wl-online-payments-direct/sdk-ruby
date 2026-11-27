@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/calculate_surcharge_request'
+require 'onlinepayments/sdk/domain/calculate_surcharge_request'
 require 'onlinepayments/sdk/domain/card_source'
 require 'onlinepayments/sdk/domain/surcharge_calculation_card'
 require 'onlinepayments/sdk/domain/amount_of_money'

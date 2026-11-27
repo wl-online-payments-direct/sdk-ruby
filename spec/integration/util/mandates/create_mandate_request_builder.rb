@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/bank_account_iban'
+require 'onlinepayments/sdk/domain/bank_account_iban'
 require 'onlinepayments/sdk/domain/create_mandate_request'
 require 'onlinepayments/sdk/domain/mandate_address'
 require 'onlinepayments/sdk/domain/mandate_contact_details'

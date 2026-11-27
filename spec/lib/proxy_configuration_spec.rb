@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'uri'
 require 'onlinepayments/sdk/proxy_configuration'
 
@@ -217,6 +217,24 @@ describe ProxyConfiguration do
     it 'returns the proxy_uri' do
       pc = ProxyConfiguration.new(host: 'proxy.example.com', port: 8080)
       expect(pc.to_s).to eq('http://proxy.example.com:8080')
+    end
+  end
+
+  describe '#inspect' do
+    it 'masks the password' do
+      pc = ProxyConfiguration.new(host: 'proxy.example.com', port: 8080, username: 'proxy-user', password: 'proxy-password')
+      expect(pc.inspect).not_to include('proxy-password')
+      expect(pc.inspect).to include('http://proxy-user:********@proxy.example.com:8080')
+    end
+  end
+
+  describe 'construction with a String address' do
+    it 'ignores a trailing slash' do
+      pc = ProxyConfiguration.new(address: 'http://proxy.example.com:8080/')
+      expect(pc.scheme).to eq('http')
+      expect(pc.host).to eq('proxy.example.com')
+      expect(pc.port).to eq(8080)
+      expect(pc.proxy_uri).to eq('http://proxy.example.com:8080')
     end
   end
 end

@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/communication/multipart_form_data_object'
 
 MultipartFormDataObject ||= OnlinePayments::SDK::Communication::MultipartFormDataObject

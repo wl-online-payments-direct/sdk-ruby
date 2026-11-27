@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/communication/request_param'
 
 RequestParam ||= OnlinePayments::SDK::Communication::RequestParam

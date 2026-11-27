@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/validation_exception'
 
 ValidationException ||= OnlinePayments::SDK::ValidationException

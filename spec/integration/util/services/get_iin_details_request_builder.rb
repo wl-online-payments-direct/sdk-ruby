@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/get_iin_details_request'
+require 'onlinepayments/sdk/domain/get_iin_details_request'
 
 module Integration
   module Util

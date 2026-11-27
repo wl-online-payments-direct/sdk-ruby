@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/send_test_request'
+require 'onlinepayments/sdk/domain/send_test_request'
 
 module Integration
   module Util

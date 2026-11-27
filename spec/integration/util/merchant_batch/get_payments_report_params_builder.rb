@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/merchant/merchantbatch/get_payments_report_params'
+require 'onlinepayments/sdk/merchant/merchantbatch/get_payments_report_params'
 
 module Integration
   module Util

@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/merchant/tokenization/get_card_data_by_tokens_params'
+require 'onlinepayments/sdk/merchant/tokenization/get_card_data_by_tokens_params'
 
 module Integration
   module Util

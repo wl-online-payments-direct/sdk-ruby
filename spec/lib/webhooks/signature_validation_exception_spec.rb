@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/webhooks/signature_validation_exception'
 
 SignatureValidationException ||= OnlinePayments::SDK::Webhooks::SignatureValidationException

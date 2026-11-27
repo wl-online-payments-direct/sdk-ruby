@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/merchant/products/get_payment_product_params'
+require 'onlinepayments/sdk/merchant/products/get_payment_product_params'
 
 module Integration
   module Util

@@ -1,4 +1,4 @@
-﻿require 'securerandom'
+require 'securerandom'
 require 'onlinepayments/sdk/domain/address'
 require 'onlinepayments/sdk/domain/amount_of_money'
 require 'onlinepayments/sdk/domain/card_payment_method_specific_input_for_hosted_checkout'

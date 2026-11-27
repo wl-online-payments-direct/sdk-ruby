@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/communication/response_header'
 
 ResponseHeader ||= OnlinePayments::SDK::Communication::ResponseHeader

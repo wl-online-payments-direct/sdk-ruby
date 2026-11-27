@@ -1,4 +1,4 @@
-﻿require 'securerandom'
+require 'securerandom'
 require 'spec_helper'
 require 'integration_setup'
 require 'webmock/rspec'

@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/amount_of_money'
+require 'onlinepayments/sdk/domain/amount_of_money'
 require 'onlinepayments/sdk/domain/card'
 require 'onlinepayments/sdk/domain/card_payout_method_specific_input'
 require 'onlinepayments/sdk/domain/create_payout_request'

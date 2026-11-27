@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/logging/response_log_message_builder'
 require 'onlinepayments/sdk/logging/obfuscation/body_obfuscator'
 require 'onlinepayments/sdk/logging/obfuscation/header_obfuscator'

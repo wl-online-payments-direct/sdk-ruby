@@ -1,4 +1,4 @@
-﻿require 'date'
+require 'date'
 require 'securerandom'
 require 'onlinepayments/sdk/domain/amount_of_money'
 require 'onlinepayments/sdk/domain/create_payment_link_request'

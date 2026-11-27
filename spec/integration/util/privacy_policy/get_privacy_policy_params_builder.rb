@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/merchant/privacypolicy/get_privacy_policy_params'
+require 'onlinepayments/sdk/merchant/privacypolicy/get_privacy_policy_params'
 
 module Integration
   module Util

@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/validate_credentials_request'
+require 'onlinepayments/sdk/domain/validate_credentials_request'
 
 module Integration
   module Util

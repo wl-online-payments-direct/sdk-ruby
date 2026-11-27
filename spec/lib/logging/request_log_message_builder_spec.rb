@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'uri'
 require 'onlinepayments/sdk/logging/request_log_message_builder'
 

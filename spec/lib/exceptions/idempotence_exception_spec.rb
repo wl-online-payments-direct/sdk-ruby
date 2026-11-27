@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/idempotence_exception'
 
 IdempotenceException ||= OnlinePayments::SDK::IdempotenceException

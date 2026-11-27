@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/session_request'
+require 'onlinepayments/sdk/domain/session_request'
 
 module Integration
   module Util

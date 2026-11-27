@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/card_data_without_cvv'
+require 'onlinepayments/sdk/domain/card_data_without_cvv'
 require 'onlinepayments/sdk/domain/import_cof_series_request'
 
 module Integration

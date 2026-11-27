@@ -1,4 +1,4 @@
-﻿require 'integration_setup'
+require 'integration_setup'
 require 'integration/util/payment_link/create_payment_link_request_builder'
 require 'integration/util/mandates/create_mandate_request_builder'
 require 'integration/util/common/create_payment_request_builder'

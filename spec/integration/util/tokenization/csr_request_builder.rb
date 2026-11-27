@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/csr_request'
+require 'onlinepayments/sdk/domain/csr_request'
 
 module Integration
   module Util

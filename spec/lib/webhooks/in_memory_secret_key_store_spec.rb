@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/webhooks/in_memory_secret_key_store'
 require 'onlinepayments/sdk/webhooks/secret_key_not_available_exception'
 

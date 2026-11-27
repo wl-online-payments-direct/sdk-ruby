@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/merchant/products/get_product_directory_params'
+require 'onlinepayments/sdk/merchant/products/get_product_directory_params'
 
 module Integration
   module Util

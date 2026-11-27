@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/communication/not_found_exception'
 
 NotFoundException ||= OnlinePayments::SDK::Communication::NotFoundException

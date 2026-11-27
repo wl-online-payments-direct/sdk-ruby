@@ -1,4 +1,4 @@
-﻿require 'spec_helper'
+require 'spec_helper'
 require 'onlinepayments/sdk/json/marshaller_syntax_exception'
 
 MarshallerSyntaxException ||= OnlinePayments::SDK::JSON::MarshallerSyntaxException

@@ -1,4 +1,4 @@
-﻿require 'onlinepayments/sdk/domain/payment_product_session302_specific_input'
+require 'onlinepayments/sdk/domain/payment_product_session302_specific_input'
 require 'onlinepayments/sdk/domain/payment_product_session_request'
 
 module Integration
